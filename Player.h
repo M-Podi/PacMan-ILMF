@@ -22,4 +22,4 @@ public:
     friend std::ostream& operator << (std::ostream& os, const Player& other);
     Player& operator = (const Player& other) = default;
 };
-std::ostream& operator<<(std::ostream& os, Player& player1);
+std::ostream& operator<<(std::ostream& os,const Player& player1);

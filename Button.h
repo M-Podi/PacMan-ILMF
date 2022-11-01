@@ -26,7 +26,7 @@ public:
     void setSize(sf::Vector2f s);
     void setPositions(sf::Vector2f Pos1,sf::Vector2f Pos2);
     std::string getText() const;
-    const bool isMouseOver(sf::RenderWindow& window) const;
+    bool isMouseOver(sf::RenderWindow& window) const;
     friend std::ostream& operator<<(std::ostream& os, const Button& button);
 };
 

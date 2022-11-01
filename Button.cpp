@@ -68,7 +68,7 @@ void Button::drawTo(sf::RenderWindow &window) {
     window.draw(text);
 }
 
-const bool Button::isMouseOver(sf::RenderWindow &window) const {
+bool Button::isMouseOver(sf::RenderWindow &window) const {
     sf::Vector2i mouseCoords({sf::Mouse::getPosition(window).x, sf::Mouse::getPosition(window).y});
 
     sf::Vector2f realCoords = window.mapPixelToCoords(mouseCoords);
