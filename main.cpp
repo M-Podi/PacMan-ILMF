@@ -15,8 +15,7 @@ private:
     //int charSize;
 
 public:
-    Popup(std::string popupText, sf::Vector2f popupSize, int charSize, sf::Color bgColor, sf::Color textColor) {
-        txt = popupText;
+    Popup(const std::string &popupText, sf::Vector2f popupSize, int charSize, sf::Color bgColor, sf::Color textColor): txt(popupText) {
         popup.setSize(popupSize);
         popup.setFillColor(bgColor);
         shadow.setSize(popupSize + sf::Vector2f(1, 1));
