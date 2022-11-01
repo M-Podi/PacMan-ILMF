@@ -4,14 +4,16 @@
 
 Button::Button(std::string btnText, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color textColor) {
     button.setSize(buttonSize);
-    button.setFillColor(bgColor);
+    //button.setFillColor(bgColor);
+    setBackColor(bgColor);
     //text.setString(btnText);
-    text.setCharacterSize(charSize);
+    //text.setCharacterSize(charSize);
     text.setFillColor(textColor);
     //shadow.setString(btnText);
     setText(std::move(btnText));
-    shadow.setCharacterSize(charSize + 2);
+    //shadow.setCharacterSize(charSize + 2);
     shadow.setFillColor(sf::Color::Black);
+    setCharSize(charSize);
 }
 
 void Button::setText(std::string t) {
@@ -30,7 +32,7 @@ void Button::setSize(sf::Vector2f s) {
 
 [[maybe_unused]] void Button::setCharSize(int c) {
     text.setCharacterSize(c);
-    shadow.setCharacterSize(c + 4);
+    shadow.setCharacterSize(c + 2);
 }
 
 void Button::setFont(sf::Font &fonts) {
