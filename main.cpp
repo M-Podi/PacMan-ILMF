@@ -72,7 +72,11 @@ std::ostream &operator<<(std::ostream &os, const Popup &popup) {
 int main() {
 
     Player player2("Matei");
+    player2.setBestScore(0);
+    player2.setName("Podi");
+    player2.setTime(0);
     std::cout << player2;
+
 
     sf::VideoMode mode(1920, 1080);
     sf::RenderWindow window(mode, "Pac-Man Podi");
