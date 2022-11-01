@@ -7,7 +7,7 @@ private:
     time_t timePlayed;
 public:
     //Player();
-    Player(const std::string &name = "Nume", int score = 0, time_t time = 0);
+    explicit Player(const std::string &name, int score = 0, time_t time = 0);
 
     Player(const Player &player);
 
