@@ -251,7 +251,7 @@ int main() {
                         return 0;
                     }
                     if (opt2.isMouseOver(window) && resp == 1) {
-                        std::cout << "Ai ales optiunea 2";
+                        //std::cout << "Ai ales optiunea 2";
                         resp = 0;
                         continue;
                     }
@@ -271,7 +271,7 @@ int main() {
                     }
                     break;
                 default:
-                    std::cout<<"Am intrat in default,boss\n";
+                    //std::cout<<"Am intrat in default,boss\n";
                     break;
             }
 
