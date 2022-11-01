@@ -4,7 +4,7 @@
 #include<SFML/Graphics.hpp>
 //#include "Game.h"
 #include "Button.h"
-
+#include<string.h>
 
 class Popup {
 private:
@@ -12,7 +12,7 @@ private:
     sf::Text text;
     sf::Vector2f Position;
     std::string txt;
-    int charSize;
+    //int charSize;
 
 public:
     Popup(std::string popupText, sf::Vector2f popupSize, int charSize, sf::Color bgColor, sf::Color textColor) {
@@ -197,9 +197,10 @@ int main() {
         //cursor.setPosition(Mouse.getPosition(window).x, Mouse.getPosition(window).y);
 
         while (window.pollEvent(event)) {
-            switch (event.type) {
+            switch (event.type){
                 case sf::Event::Closed:
                     window.close();
+                    break;
                 case sf::Event::MouseMoved:
                     if (btn1.isMouseOver(window)) {
                         btn1.setTextColor(sf::Color::Red);
@@ -233,7 +234,6 @@ int main() {
                     } else {
                         go.setTextColor(sf::Color::Yellow);
                     }
-
                     break;
                 case sf::Event::MouseButtonPressed:
                     if (go.isMouseOver(window) && resp == 3) {
@@ -265,6 +265,10 @@ int main() {
                     if (btn1.isMouseOver(window) && resp == 0) {
                         resp = 3;
                     }
+                    break;
+                default:
+                    std::cout<<"Am intrat in default,boss\n";
+                    break;
             }
 
         }
