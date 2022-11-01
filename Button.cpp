@@ -2,7 +2,7 @@
 
 #include <utility>
 
-Button::Button(std::string btnText, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color textColor) {
+Button::Button(const std::string &btnText, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color textColor) {
     button.setSize(buttonSize);
     //button.setFillColor(bgColor);
     setBackColor(bgColor);

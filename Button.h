@@ -16,7 +16,7 @@ private:
     std::string txt;
 public:
     Button();
-    Button(std::string btnText, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color textColor);
+    Button(const std::string &btnText, sf::Vector2f buttonSize, int charSize, sf::Color bgColor, sf::Color textColor);
     void setText(std::string t);
     void setCharSize(int c);
     void setFont(sf::Font& font);
