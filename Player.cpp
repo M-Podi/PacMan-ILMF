@@ -7,19 +7,19 @@ Player::~Player() {
 }
 Player::Player(const Player& other): name(other.name), bestScore(other.bestScore), timePlayed(other.timePlayed) { }
 
-void Player::setBestScore(int score) {
+[[maybe_unused]] void Player::setBestScore(int score) {
     this->bestScore = score;
 }
 int Player::getBestScore() const {
     return bestScore;
 }
-void Player::setName(const std::string& pName) {
+[[maybe_unused]] void Player::setName(const std::string& pName) {
     this->name = pName;
 }
 std::string Player::getName() const {
     return name;
 }
-void Player::setTime(time_t time) {
+[[maybe_unused]] void Player::setTime(time_t time) {
     this->timePlayed = time;
 }
 time_t Player::getTime() const {
