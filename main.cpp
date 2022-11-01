@@ -164,8 +164,6 @@ int main() {
     while (window.isOpen()) {
 
         if (resp == 0) {
-            std::cout << "Afisez mainmenu1\n";
-            std::cout << "Afisez mainmenu2\n";
             window.clear();
             window.draw(background);
             btn1.drawTo(window);
