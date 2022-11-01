@@ -28,7 +28,7 @@ void Button::setSize(sf::Vector2f s) {
     button.setSize(s);
 }
 
-void Button::setCharSize(int c) {
+[[maybe_unused]] void Button::setCharSize(int c) {
     text.setCharacterSize(c);
     shadow.setCharacterSize(c + 4);
 }
@@ -38,7 +38,7 @@ void Button::setFont(sf::Font &fonts) {
     shadow.setFont(fonts);
 }
 
-void Button::setBackColor(sf::Color color) {
+[[maybe_unused]] void Button::setBackColor(sf::Color color) {
     button.setFillColor(color);
 }
 
