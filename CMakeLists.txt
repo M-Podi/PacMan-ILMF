@@ -4,6 +4,10 @@ cmake_minimum_required(VERSION 3.15)
 # for now, the project name is used as the executable name
 project(oop)
 
+set(CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/lib)
+set(CMAKE_RUNTIME_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/bin)
+
 set(CMAKE_CXX_STANDARD 20)
 set(CMAKE_CXX_STANDARD_REQUIRED ON)
 set(CMAKE_CXX_EXTENSIONS OFF)
@@ -42,7 +46,7 @@ FetchContent_Declare(
 
 function(sfml_set_custom_stdlib target)
     if(MSVC)
-        target_compile_options(${target} PRIVATE "$<${debug_mode}:/fsanitize=address>")
+        #target_compile_options(${target} PRIVATE "$<${debug_mode}:/fsanitize=address>")
     elseif(APPLE)
     elseif(UNIX)
         if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
@@ -66,6 +70,7 @@ FetchContent_MakeAvailable(SFML)
 sfml_set_custom_stdlib(sfml-system)
 sfml_set_custom_stdlib(sfml-window)
 sfml_set_custom_stdlib(sfml-graphics)
+sfml_set_custom_stdlib(sfml-audio)
 
 ###############################################################################
 
@@ -76,7 +81,7 @@ sfml_set_custom_stdlib(sfml-graphics)
 ###############################################################################
 
 # NOTE: update executable name in .github/workflows/cmake.yml when changing name here
-add_executable(${PROJECT_NAME} main.cpp)
+add_executable(${PROJECT_NAME} main.cpp Button.cpp Button.h Player.cpp Player.h)
 
 ###############################################################################
 
@@ -114,7 +119,8 @@ endif()
 # sanitizers
 
 if(MSVC)
-    target_compile_options(${PROJECT_NAME} PRIVATE "$<${debug_mode}:/fsanitize=address>")
+    #target_compile_options(${PROJECT_NAME} PRIVATE "$<${debug_mode}:/fsanitize=address>")
+
 elseif(APPLE)
     # if("${CMAKE_CXX_COMPILER_ID}" MATCHES "Clang")
     # first check Apple since Apple is also a kind of Unix
@@ -147,7 +153,7 @@ endif()
 #target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ext/<SomeHppLib>/include)
 target_include_directories(${PROJECT_NAME} SYSTEM PRIVATE ${SFML_SOURCE_DIR}/include)
 target_link_directories(${PROJECT_NAME} PRIVATE ${SFML_BINARY_DIR}/lib)
-target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system)
+target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system sfml-audio)
 
 ###############################################################################
 
