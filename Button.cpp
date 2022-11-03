@@ -12,14 +12,14 @@ Button::Button(const std::string &btnText, sf::Vector2f buttonSize, int charSize
     //shadow.setString(btnText);
     setText(std::move(btnText));
     //shadow.setCharacterSize(charSize + 2);
-    shadow.setFillColor(sf::Color::Black);
+    //shadow.setFillColor(sf::Color::Black);
     setCharSize(charSize);
 }
 
 void Button::setText(std::string t) {
     txt=t;
     text.setString(t);
-    shadow.setString(t);
+    //shadow.setString(t);
 }
 
 std::string Button::getText() const {
@@ -32,12 +32,12 @@ void Button::setSize(sf::Vector2f s) {
 
 [[maybe_unused]] void Button::setCharSize(int c) {
     text.setCharacterSize(c);
-    shadow.setCharacterSize(c + 2);
+    //shadow.setCharacterSize(c + 2);
 }
 
 void Button::setFont(sf::Font &fonts) {
     text.setFont(fonts);
-    shadow.setFont(fonts);
+    //shadow.setFont(fonts);
 }
 
 [[maybe_unused]] void Button::setBackColor(sf::Color color) {
@@ -46,7 +46,9 @@ void Button::setFont(sf::Font &fonts) {
 
 void Button::setTextColor(sf::Color color) {
     text.setFillColor(color);
-    shadow.setFillColor(sf::Color::Black);
+    text.setOutlineColor(sf::Color::White);
+    text.setOutlineThickness(5);
+    //shadow.setFillColor(sf::Color::Black);
 }
 
 
@@ -61,12 +63,12 @@ void Button::setPositions(sf::Vector2f point, sf::Vector2f btn) {
     float yPos = (point.y + btn.y / div) - (text.getLocalBounds().height / 2);
 
     text.setPosition(xPos, yPos);
-    shadow.setPosition(xPos, yPos);
+    //shadow.setPosition(xPos, yPos);
 }
 
 void Button::drawTo(sf::RenderWindow &window) {
     window.draw(button);
-    window.draw(shadow);
+    //window.draw(shadow);
     window.draw(text);
 }
 
