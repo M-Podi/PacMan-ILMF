@@ -78,7 +78,7 @@ int main() {
 
 
     sf::VideoMode mode(1920, 1080);
-    sf::RenderWindow window(mode, "Pac-Man Podi");
+    sf::RenderWindow window(mode, "Pac-Man Podi",sf::Style::Fullscreen);
 
     //Game game;
 
@@ -99,46 +99,46 @@ int main() {
     sf::Sprite background;
 
 
-    if (!pTexture.loadFromFile("MenuBackground.jpg"))
+    if (!pTexture.loadFromFile("Background4.jpg"))
         std::cout << "Error could not load background imageeeeeeeee" << std::endl;
     background.setTexture(pTexture);
 
-    Button btn1("Play", {strlen("Play") * 17.f, 30.f}, 55, sf::Color::Transparent,
-                sf::Color::Yellow);//, sf::Sound sound1);
+    Button btn1("   Play", {strlen("Play") * 30.f, 30.f}, 77, sf::Color::Transparent,
+                sf::Color(130,0,2,255));//, sf::Sound sound1);
     btn1.setFont(font1);
     btn1.setPositions(sf::Vector2f(window.getSize().x / 7 * 5, window.getSize().x / 8),
                       sf::Vector2f(strlen("Play") * 17, 15));
     std::cout << btn1;
 
-    Button btn2("Settings", {strlen("Settings") * 17.f, 30.f}, 55, sf::Color::Transparent,
-                sf::Color::Yellow);//,sf::Sound sound1);
+    Button btn2("     Settings", {strlen("Settings") * 30.f, 30.f}, 77, sf::Color::Transparent,
+                sf::Color(130,0,2,255));//,sf::Sound sound1);
     btn2.setFont(font1);
     btn2.setPositions(sf::Vector2f(window.getSize().x / 7 * 5, window.getSize().x / 8 * 2),
                       sf::Vector2f(strlen("Settings") * 17, 15));
 
 
-    Button btn3("Quit", {strlen("Quit") * 17.f, 30.f}, 55, sf::Color::Transparent,
-                sf::Color::Yellow);//,sf::Sound sound1);
+    Button btn3("   Quit", {strlen("Quit") * 30.f, 30.f}, 77, sf::Color::Transparent,
+                sf::Color(130,0,2,255));//,sf::Sound sound1);
     btn3.setFont(font1);
     btn3.setPositions(sf::Vector2f(window.getSize().x / 7 * 5, window.getSize().x / 8 * 3),
                       sf::Vector2f(strlen("Quit") * 17, 15));
 
 
-    Button opt1("Yes", {strlen("Play") * 17.f, 30.f}, 55, sf::Color::Transparent, sf::Color::Yellow);
+    Button opt1("   Yes", {strlen("Play") * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
     opt1.setFont(font1);
     opt1.setPositions(sf::Vector2f(window.getSize().x / 25 * 11, window.getSize().y / 7 * 4),
                       sf::Vector2f(strlen("Play") * 17, 15));
-    Button opt2("No", {strlen("Play") * 17.f, 30.f}, 55, sf::Color::Transparent, sf::Color::Yellow);
+    Button opt2("   No", {strlen("Play") * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
     opt2.setFont(font1);
     opt2.setPositions(sf::Vector2f(window.getSize().x / 20 * 11, window.getSize().y / 7 * 4),
                       sf::Vector2f(strlen("Play") * 17, 15));
 
-    Button done("Done", {strlen("Done") * 17.f, 30.f}, 55, sf::Color::Transparent, sf::Color::Yellow);
+    Button done("   Done", {strlen("Done") * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
     done.setFont(font1);
     done.setPositions(sf::Vector2f(window.getSize().x / 20 * 11, window.getSize().y / 7 * 4),
                       sf::Vector2f(strlen("Play") * 17, 15));
 
-    Button go("Go", {strlen("Done") * 17.f, 30.f}, 55, sf::Color::Transparent, sf::Color::Yellow);
+    Button go("   Go", {strlen("Go") * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
     go.setFont(font1);
     go.setPositions(sf::Vector2f(window.getSize().x / 20 * 11, window.getSize().y / 7 * 4),
                     sf::Vector2f(strlen("Play") * 17, 15));
@@ -206,36 +206,36 @@ int main() {
                     break;
                 case sf::Event::MouseMoved:
                     if (btn1.isMouseOver(window)) {
-                        btn1.setTextColor(sf::Color::Red);
+                        btn1.setTextColor(sf::Color(130,0,2,255));
                     } else
-                        btn1.setTextColor(sf::Color::Yellow);
+                        btn1.setTextColor(sf::Color(255,146,0,255));
                     if (btn2.isMouseOver(window)) {
-                        btn2.setTextColor(sf::Color::Red);
+                        btn2.setTextColor(sf::Color(130,0,2,255));
                     } else
-                        btn2.setTextColor(sf::Color::Yellow);
+                        btn2.setTextColor(sf::Color(255,146,0,255));
                     if (btn3.isMouseOver(window)) {
-                        btn3.setTextColor(sf::Color::Red);
+                        btn3.setTextColor(sf::Color(130,0,2,255));
                     } else
-                        btn3.setTextColor(sf::Color::Yellow);
+                        btn3.setTextColor(sf::Color(255,146,0,255));
                     if (opt1.isMouseOver(window)) {
-                        opt1.setTextColor(sf::Color::Red);
+                        opt1.setTextColor(sf::Color(130,0,2,255));
                     } else {
-                        opt1.setTextColor(sf::Color::Yellow);
+                        opt1.setTextColor(sf::Color(255,146,0,255));
                     }
                     if (opt2.isMouseOver(window)) {
-                        opt2.setTextColor(sf::Color::Red);
+                        opt2.setTextColor(sf::Color(130,0,2,255));
                     } else {
-                        opt2.setTextColor(sf::Color::Yellow);
+                        opt2.setTextColor(sf::Color(255,146,0,255));
                     }
                     if (done.isMouseOver(window)) {
-                        done.setTextColor(sf::Color::Red);
+                        done.setTextColor(sf::Color(130,0,2,255));
                     } else {
-                        done.setTextColor(sf::Color::Yellow);
+                        done.setTextColor(sf::Color(255,146,0,255));
                     }
                     if (go.isMouseOver(window)) {
-                        go.setTextColor(sf::Color::Red);
+                        go.setTextColor(sf::Color(130,0,2,255));
                     } else {
-                        go.setTextColor(sf::Color::Yellow);
+                        go.setTextColor(sf::Color(255,146,0,255));
                     }
                     break;
                 case sf::Event::MouseButtonPressed:

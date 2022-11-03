@@ -7,7 +7,7 @@
 class Button {
 private:
     sf::RectangleShape button;
-    sf::Text text, shadow;
+    sf::Text text;//, shadow;
     std::string btnText;
     sf::Vector2f buttonSize;
     int charSize=1;
