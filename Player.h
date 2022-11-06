@@ -19,8 +19,6 @@ public:
 
     void setName(const std::string &name);
 
-    void setEnc(const std::string &enc_name);
-
     std::string getName() const;
 
     std::string getEnc() const;

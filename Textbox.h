@@ -14,6 +14,7 @@ public:
     Textbox(){}
     Textbox(int size,sf::Color color, bool sel){
         setCharacterSize(size);
+        limit=60;
         setColor(color);
         isSelected=sel;
         textbox.setCharacterSize(size);
