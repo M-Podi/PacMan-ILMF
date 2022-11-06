@@ -96,6 +96,7 @@ int main() {
     music2.openFromFile("Music2.flac");
     music3.openFromFile("Music3.flac");
 
+    //music.setVolume(10);
     music.setVolume(0);
     music2.setVolume(0);
     music3.setVolume(0);
