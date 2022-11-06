@@ -244,6 +244,7 @@ int main() {
 
                 case sf::Event::TextEntered:
                     textbox1.typedOn(event);
+                    break;
                 case sf::Event::MouseMoved:
                     if (btn1.isMouseOver(window)) {
                         btn1.setTextColor(sf::Color(130,0,2,255));
