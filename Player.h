@@ -1,8 +1,8 @@
 #include<iostream>
-
+#include<vector>
 class Player {
 private:
-    std::string name;
+    std::string name,enc_name;
     int bestScore;
     time_t timePlayed;
 public:
@@ -19,7 +19,11 @@ public:
 
     void setName(const std::string &name);
 
+    void setEnc(const std::string &enc_name);
+
     std::string getName() const;
+
+    std::string getEnc() const;
 
     void setTime(time_t time);
 
@@ -28,6 +32,8 @@ public:
     friend std::ostream &operator<<(std::ostream &os, const Player &other);
 
     Player &operator=(const Player &other) = default;
+
+
 };
 
 std::ostream &operator<<(std::ostream &os, const Player &player1);
