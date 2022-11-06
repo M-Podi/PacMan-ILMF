@@ -30,9 +30,6 @@ int Player::getBestScore() const {
     }
     this->enc_name=encrypt;
 }
-[[maybe_unused]] void Player::setEnc(const std::string &encName) {
-    this->enc_name = encName;
-}
 
 std::string Player::getEnc() const {
     return enc_name;
