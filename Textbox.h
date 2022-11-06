@@ -42,7 +42,7 @@ public:
         if(!sel) {
             std::string t=text.str();
             std::string newT="";
-            for(int i = 0;i<t.length()-1;i++){
+            for(unsigned long i = 0;i<t.length()-1;i++){
                 newT+=t[i];
             }
             textbox.setString(newT);
@@ -81,7 +81,7 @@ private:
     std::ostringstream text;
     bool isSelected = false;
     bool hasLimit = false;
-    int limit;
+    unsigned long limit;
     void inputLogic(int charTyped){
         if(charTyped != DELETE_KEY && charTyped != ENTER_KEY && charTyped != ESCAPE_KEY){
             text<<static_cast<char>(charTyped);
@@ -96,7 +96,7 @@ private:
     void deleteLastChar(){
         std::string t=text.str();
         std::string newT="";
-        for(int i = 0;i<t.length()-1;i++){
+        for(unsigned long i = 0;i<t.length()-1;i++){
             newT+=t[i];
         }
         text.str("");
