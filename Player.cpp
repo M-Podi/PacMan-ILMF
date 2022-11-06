@@ -18,6 +18,24 @@ int Player::getBestScore() const {
 
 [[maybe_unused]] void Player::setName(const std::string &pName) {
     this->name = pName;
+    std::string encrypt="";
+    for(int i=0;i<name.length();i++){
+        if(isupper(name[i])){
+            encrypt+=(name[i]-'A'+13)%26+'A';
+        }else if(islower(name[i])){
+            encrypt+=(name[i]-'a'+13)%26+'a';
+        }
+        else
+            encrypt+=name[i];
+    }
+    this->enc_name=encrypt;
+}
+[[maybe_unused]] void Player::setEnc(const std::string &encName) {
+    this->enc_name = encName;
+}
+
+std::string Player::getEnc() const {
+    return enc_name;
 }
 
 std::string Player::getName() const {
