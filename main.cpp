@@ -96,9 +96,9 @@ int main() {
     music2.openFromFile("Music2.flac");
     music3.openFromFile("Music3.flac");
 
-    music.setVolume(30);
-    music2.setVolume(30);
-    music3.setVolume(30);
+    music.setVolume(0);
+    music2.setVolume(0);
+    music3.setVolume(0);
 
     //Font
     sf::Font font1;

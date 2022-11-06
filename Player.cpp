@@ -19,7 +19,7 @@ int Player::getBestScore() const {
 [[maybe_unused]] void Player::setName(const std::string &pName) {
     this->name = pName;
     std::string encrypt="";
-    for(int i=0;i<name.length();i++){
+    for(unsigned long i=0;i<name.length();i++){
         if(isupper(name[i])){
             encrypt+=(name[i]-'A'+13)%26+'A';
         }else if(islower(name[i])){
