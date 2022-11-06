@@ -190,6 +190,7 @@ int main() {
     Textbox textbox1(30,sf::Color::Yellow,true);
     textbox1.setFont(font1);
     textbox1.setPosition(sf::Vector2f(window.getSize().x / 25 * 11, window.getSize().y / 20 * 9));
+    textbox1.setLimit(true,20);
 
     music.play();
     music.setLoop(true);
