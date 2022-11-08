@@ -7,6 +7,7 @@
 #include "Button.h"
 #include<cstring>
 #include "Textbox.h"
+#include "Animation.h"
 
 class Popup {
 private:
@@ -90,30 +91,31 @@ int main() {
     sf::VideoMode mode(1920, 1080);
     sf::RenderWindow window(mode, "Pac-Man Podi",sf::Style::Fullscreen);
 
+    //Amimated Background
+    sf::RectangleShape animatedBackground(sf::Vector2f(1920,1080));
+    animatedBackground.setPosition(0,0);
+    sf::Texture anBack;
+    anBack.loadFromFile("resources/AnimatedBackground2.png");
+    animatedBackground.setTexture(&anBack);
+    Animation animation(&anBack,sf::Vector2u(8,1),0.15f);
+    float deltaTime=0.0f;
+    sf::Clock clock;
+
     //Sound
     sf::Music music, music2, music3;
-    music.openFromFile("GameMusic.flac");
-    music2.openFromFile("Music2.flac");
-    music3.openFromFile("Music3.flac");
+    music.openFromFile("resources/GameMusic.flac");
+    music2.openFromFile("resources/Music2.flac");
+    music3.openFromFile("resources/Music3.flac");
 
     //music.setVolume(10);
-    music.setVolume(0);
-    music2.setVolume(0);
-    music3.setVolume(0);
+    music.setVolume(30);
+    music2.setVolume(30);
+    music3.setVolume(30);
 
     //Font
     sf::Font font1;
-    font1.loadFromFile("font2.ttf");
+    font1.loadFromFile("resources/font2.ttf");
 
-
-    //Background
-    sf::Texture pTexture;
-    sf::Sprite background;
-
-
-    if (!pTexture.loadFromFile("Background4.jpg"))
-        std::cout << "Error could not load background imageeeeeeeee" << std::endl;
-    background.setTexture(pTexture);
 
     Button btn1("   Play", {strlen("Play") * 30.f, 30.f}, 77, sf::Color::Transparent,
                 sf::Color(130,0,2,255));//, sf::Sound sound1);
@@ -157,8 +159,8 @@ int main() {
 
     Button VolumeDown("-", {strlen("-") * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
     VolumeDown.setFont(font1);
-    VolumeDown.setPositions(sf::Vector2f(window.getSize().x / 25 * 11, window.getSize().y / 20 * 9),
-                      sf::Vector2f(strlen("-") * 17, 15));
+    VolumeDown.setPositions(sf::Vector2f(window.getSize().x / 25 * 11, window.getSize().y / 100*47),
+                      sf::Vector2f(strlen("-") * 5, 15));
     Button VolumeUp("+", {strlen("+") * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
     VolumeUp.setFont(font1);
     VolumeUp.setPositions(sf::Vector2f(window.getSize().x / 20 * 11, window.getSize().y / 20 * 9),
@@ -198,39 +200,41 @@ int main() {
     music3.setLoop(true);
     int resp = 0;
     while (window.isOpen()) {
-        if (resp == 0) {
-            window.clear();
-            window.draw(background);
-            btn1.drawTo(window);
-            btn2.drawTo(window);
-            btn3.drawTo(window);
-            window.display();
+        deltaTime=clock.restart().asSeconds();
+        window.clear();
+        //window.draw(background);
+        window.draw(animatedBackground);
+        switch(resp){
+            case 0:
+                btn1.drawTo(window);
+                btn2.drawTo(window);
+                btn3.drawTo(window);
+                window.display();
+                break;
+            case 1:
+                quit.draw(window);
+                opt1.drawTo(window);
+                opt2.drawTo(window);
+                window.display();
+                break;
+            case 2:
+                settings.draw(window);
+                VolumeUp.drawTo(window);
+                VolumeDown.drawTo(window);
+                done.drawTo(window);
+                window.display();
+                break;
+            case 3:
+                play.draw(window);
+                textbox1.drawTo(window);
+                go.drawTo(window);
+                window.display();
+                break;
+            default:
+                break;
         }
-        if (resp == 1) {
-            window.clear();
-            window.draw(background);
-            quit.draw(window);
-            opt1.drawTo(window);
-            opt2.drawTo(window);
-            window.display();
-        }
-        if (resp == 2) {
-            window.clear();
-            window.draw(background);
-            settings.draw(window);
-            VolumeUp.drawTo(window);
-            VolumeDown.drawTo(window);
-            done.drawTo(window);
-            window.display();
-        }
-        if (resp == 3) {
-            window.clear();
-            window.draw(background);
-            play.draw(window);
-            textbox1.drawTo(window);
-            go.drawTo(window);
-            window.display();
-        }
+
+
         sf::Event event;
 
         while (window.pollEvent(event)) {
@@ -239,8 +243,10 @@ int main() {
                     window.close();
                     break;
                 case sf::Event::KeyReleased:
-                    if(event.key.code==sf::Keyboard::Escape)
+                    if(event.key.code==sf::Keyboard::Escape&&resp==0)
                         resp=1;
+                    if(event.key.code==sf::Keyboard::Escape&&(resp==2||resp==3))
+                        resp=0;
                     break;
 
                 case sf::Event::TextEntered:
@@ -293,7 +299,7 @@ int main() {
                 case sf::Event::MouseButtonPressed:
                     if (go.isMouseOver(window) && resp == 3) {
                         window.clear();
-                        window.draw(background);
+                        window.draw(animatedBackground);
                         window.display();
                         std::string name=textbox1.getText();
                         player2.setName(name);
@@ -364,7 +370,8 @@ int main() {
             }
 
         }
-
+        animation.Update(0,deltaTime);
+        animatedBackground.setTextureRect(animation.uvRect);
     }
     return 0;
 }

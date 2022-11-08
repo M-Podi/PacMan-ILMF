@@ -81,7 +81,7 @@ sfml_set_custom_stdlib(sfml-audio)
 ###############################################################################
 
 # NOTE: update executable name in .github/workflows/cmake.yml when changing name here
-add_executable(${PROJECT_NAME} main.cpp Button.cpp Button.h Player.cpp Player.h Textbox.cpp Textbox.h)
+add_executable(${PROJECT_NAME} main.cpp Button.cpp Button.h Player.cpp Player.h Textbox.cpp Textbox.h Animation.cpp Animation.h)
 
 ###############################################################################
 
@@ -159,5 +159,6 @@ target_link_libraries(${PROJECT_NAME} sfml-graphics sfml-window sfml-system sfml
 
 # copy binaries to bin folder; these are uploaded as artifacts on each release
 install(TARGETS ${PROJECT_NAME} DESTINATION bin)
-# install(DIRECTORY some_dir1 some_dir2 DESTINATION bin)
+install(DIRECTORY resources DESTINATION bin)
+
 # install(FILES some_file1.txt some_file2.md DESTINATION bin)
