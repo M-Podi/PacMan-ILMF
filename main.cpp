@@ -98,7 +98,7 @@ int main() {
     anBack.loadFromFile("resources/AnimatedBackground2.png");
     animatedBackground.setTexture(&anBack);
     Animation animation(&anBack,sf::Vector2u(8,1),0.15f);
-    float deltaTime=0.0f;
+    float deltaTime;
     sf::Clock clock;
 
     //Sound
