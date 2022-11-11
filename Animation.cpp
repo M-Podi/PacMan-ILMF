@@ -20,6 +20,6 @@ void Animation::Update(int row,float deltaTime){
         if (currentImage.x > imageCount.x-1)
             currentImage.x = 0;
     }
-    uvRect.left=currentImage.x*uvRect.width;
-    uvRect.top=currentImage.y*uvRect.height;
+    uvRect.left=int(currentImage.x)*uvRect.width;
+    uvRect.top=int(currentImage.y)*uvRect.height;
 }
