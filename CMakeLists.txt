@@ -81,7 +81,7 @@ sfml_set_custom_stdlib(sfml-audio)
 ###############################################################################
 
 # NOTE: update executable name in .github/workflows/cmake.yml when changing name here
-add_executable(${PROJECT_NAME} main.cpp Button.cpp Button.h Player.cpp Player.h Textbox.cpp Textbox.h Animation.cpp Animation.h Entity.cpp Entity.h MainMenu.cpp MainMenu.h)
+add_executable(${PROJECT_NAME} main.cpp Button.cpp Button.h Player.cpp Player.h Textbox.cpp Textbox.h Animation.cpp Animation.h Entity.cpp Entity.h MainMenu.cpp MainMenu.h Resources.cpp Resources.h)
 
 ###############################################################################
 

@@ -10,6 +10,7 @@
 #include "Animation.h"
 #include "Entity.h"
 #include "MainMenu.h"
+#include "Resources.h"
 class TextDisp{
 private:
     sf::Text text;
@@ -98,13 +99,6 @@ public:
         popup.setPosition(point);
         shadow.setPosition(point);
         Position = point;
-        //float div = 2.0 + btn.y / btn.x;
-
-        //float xPos = point.x + popup.getLocalBounds().width / 2 - text.getLocalBounds().width / 2;
-        //float yPos = point.y + popup.getLocalBounds().height / 2 - text.getLocalBounds().height / 2;
-
-        //float xPos = (point.x + btn.x / div) - (popup.getLocalBounds().width / 2);
-        //float yPos = (point.y + btn.y / div) - (text.getLocalBounds().height / 2);
 
         float xPos = square.x;
         float yPos = square.y;
@@ -147,19 +141,19 @@ int main() {
     //Amimated Background
     sf::RectangleShape animatedBackground(sf::Vector2f(1920,1080));
     animatedBackground.setPosition(0,0);
-    sf::Texture anBack,popupWindow;
-    anBack.loadFromFile("resources/AnimatedBackground2.png");
-    popupWindow.loadFromFile("resources/popup.png");
+    //sf::Texture anBack,popupWindow;
+    //anBack.loadFromFile("resources/AnimatedBackground2.png");
+    //popupWindow.loadFromFile("resources/popup.png");
 
-    animatedBackground.setTexture(&anBack);
-    Animation animation(&anBack,sf::Vector2u(8,1),0.15f);
+    animatedBackground.setTexture(&Resources::animatedBackground);
+    Animation animation(&Resources::animatedBackground,sf::Vector2u(8,1),0.15f);
     sf::Clock clock;
 
     //Sound
     sf::Music music, music2, music3;
     music.openFromFile("resources/GameMusic.flac");
     music2.openFromFile("resources/Music2.flac");
-    music3.openFromFile("resources/Music4.flac");
+    music3.openFromFile("resources/Music3.flac");
 
     //music.setVolume(10);
     music.setVolume(0);
@@ -222,7 +216,7 @@ int main() {
 
 
     Popup quit("  Are you sure you\n  want to quit?", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 50, //sf::Color::Black,
-                sf::Color(130,0,2,255),popupWindow);
+                sf::Color(130,0,2,255),Resources::popupWindow);
     quit.setFont(font1);
     quit.setPosition(sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                   (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2),
@@ -230,7 +224,7 @@ int main() {
                                   (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2));
     std::cout<<quit<<"\n";
     Popup settings("  Audio Level", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 55, //sf::Color::Black,
-                   sf::Color(130,0,2,255),popupWindow);
+                   sf::Color(130,0,2,255),Resources::popupWindow);
     settings.setFont(font1);
     settings.setPosition(sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                       (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2),
@@ -244,7 +238,7 @@ int main() {
     soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9));
 
     Popup play("  Enter your username:", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 55, //sf::Color::Black,
-                sf::Color(130,0,2,255),popupWindow);
+                sf::Color(130,0,2,255),Resources::popupWindow);
     play.setFont(font1);
     play.setPosition(sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                   (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2),
@@ -314,7 +308,7 @@ int main() {
                     if(event.key.code==sf::Keyboard::Escape&&resp==0)
                         resp=1;
                     if(event.key.code==sf::Keyboard::Escape&&(resp==2||resp==3||resp==4))
-                        resp=0;
+                        resp=0;break;
                     break;
 
                 case sf::Event::TextEntered:
@@ -375,7 +369,6 @@ int main() {
                             music2.setVolume(music.getVolume()-10);
                             music3.setVolume(music.getVolume()-10);
                         }
-                        //std::string soundL;
                         soundL=std::to_string(static_cast<int>(music.getVolume()+0.1));
                         soundL=soundL.substr(0,2);
                         soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9));
@@ -415,24 +408,3 @@ int main() {
     }
     return 0;
 }
-/*
-//Game loop;
-while (game.getWindowIsOpen())
-{
-    game.render();
-    game.update();
-
-    //cursor.setPosition(Mouse.getPosition(window).x, Mouse.getPosition(window).y);
-
-
-    //draw on the screen
-    //window.clear();
-    //window.draw(background);
-    //
-    //btn2.drawTo(window);
-    //btn3.drawTo(window);
-    //window.draw(cursor);
-    //window.display();
-}
-return 0;
-}*/
