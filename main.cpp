@@ -321,47 +321,11 @@ int main() {
                     textbox1.typedOn(event);
                     break;
                 case sf::Event::MouseMoved:
-                    if (btn1.isMouseOver(window)) {
-                        btn1.setTextColor(sf::Color(130,0,2,255));
-                    } else
-                        btn1.setTextColor(sf::Color(255,146,0,255));
-                    if (btn2.isMouseOver(window)) {
-                        btn2.setTextColor(sf::Color(130,0,2,255));
-                    } else
-                        btn2.setTextColor(sf::Color(255,146,0,255));
-                    if (btn3.isMouseOver(window)) {
-                        btn3.setTextColor(sf::Color(130,0,2,255));
-                    } else
-                        btn3.setTextColor(sf::Color(255,146,0,255));
-                    if (opt1.isMouseOver(window)) {
-                        opt1.setTextColor(sf::Color(130,0,2,255));
-                    } else {
-                        opt1.setTextColor(sf::Color(255,146,0,255));
-                    }
-                    if (opt2.isMouseOver(window)) {
-                        opt2.setTextColor(sf::Color(130,0,2,255));
-                    } else {
-                        opt2.setTextColor(sf::Color(255,146,0,255));
-                    }
-                    if (done.isMouseOver(window)) {
-                        done.setTextColor(sf::Color(130,0,2,255));
-                    } else {
-                        done.setTextColor(sf::Color(255,146,0,255));
-                    }
-                    if (go.isMouseOver(window)) {
-                        go.setTextColor(sf::Color(130,0,2,255));
-                    } else {
-                        go.setTextColor(sf::Color(255,146,0,255));
-                    }
-                    if(VolumeDown.isMouseOver(window)){
-                        VolumeDown.setTextColor(sf::Color(130,0,2,255));
-                    }else{
-                        VolumeDown.setTextColor(sf::Color(255,146,0,255));
-                    }
-                    if(VolumeUp.isMouseOver(window)){
-                        VolumeUp.setTextColor(sf::Color(130,0,2,255));
-                    }else{
-                        VolumeUp.setTextColor(sf::Color(255,146,0,255));
+                    for (const auto &it: {&btn1,&btn2,&btn3,&opt1, &opt2, &done, &go, &VolumeDown, &VolumeUp}){
+                        if (it->isMouseOver(window)) {
+                            it->setTextColor(sf::Color(130, 0, 2, 255));
+                        } else
+                            it->setTextColor(sf::Color(255, 146, 0, 255));
                     }
                     break;
                 case sf::Event::MouseButtonPressed:
@@ -384,7 +348,7 @@ int main() {
                             music.pause();
                             //music4.play();
                         }
-                        if(player2.getEnc()=="znevhf"){
+                        if(player2.getEnc()=="znevhf"||player2.getEnc()=="Znevhf"){
                             music.pause();
                         }
                         resp = 4;
