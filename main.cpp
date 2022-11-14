@@ -41,7 +41,7 @@ public:
     std::string getText() const {
         return txt;
     }
-    void setText(std::string &other){
+    void setText(const std::string &other){
         txt=other;
         text.setString(txt);
     }
@@ -240,7 +240,7 @@ int main() {
                                       (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2));
 
     std::string soundL=std::to_string(static_cast<int>(music.getVolume()+0.1));
-    soundL=soundL.substr(0,2);
+    soundL.resize(1);
     TextDisp soundlevel(soundL,45,sf::Color(130,0,2,255));
     soundlevel.setFont(Resources::defaultFont);
     soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9));
@@ -374,13 +374,15 @@ int main() {
                             for (const auto &it: {&music,&music2,&music3,&music5}){
                                 it->setVolume(0);
                             }
+                            soundL=std::to_string(static_cast<int>(music.getVolume()+0.1));
+                            soundL.resize(1);
                         }else{
                             for (const auto &it: {&music,&music2,&music3,&music5}){
                                 it->setVolume(it->getVolume()-10);
                             }
+                            soundL=std::to_string(static_cast<int>(music.getVolume()+0.1));
+                            soundL.resize(2);
                         }
-                        soundL=std::to_string(static_cast<int>(music.getVolume()+0.1));
-                        soundL=soundL.substr(0,2);
                         soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9));
                         soundlevel.setText(soundL);
                     }
@@ -391,7 +393,7 @@ int main() {
                             }
                         }
                         soundL=std::to_string(static_cast<int>(music.getVolume()+0.1));
-                        soundL=soundL.substr(0,2);
+                        soundL.resize(2);
                         if(100-music.getVolume()<5){
                             soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 100*48, static_cast<float>(window.getSize().y) / 20 * 9));
                             soundL="100";
