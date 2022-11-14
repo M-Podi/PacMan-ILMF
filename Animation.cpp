@@ -11,6 +11,10 @@ Animation::Animation(sf::Texture* texture, sf::Vector2u imageCount, float switch
 
 Animation::~Animation(){}
 
+sf::IntRect Animation::getuvRect() {
+    return uvRect;
+}
+
 void Animation::Update(int row,float deltaTime){
     currentImage.y=row;
     totalTime+=deltaTime;

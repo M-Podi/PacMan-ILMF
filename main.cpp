@@ -3,7 +3,6 @@
 #include<SFML/Audio.hpp>
 #include<SFML/Graphics.hpp>
 #include<SFML/System.hpp>
-//#include "Game.h"
 #include "Button.h"
 #include<cstring>
 #include "Textbox.h"
@@ -11,6 +10,18 @@
 #include "Entity.h"
 #include "MainMenu.h"
 #include "Resources.h"
+
+namespace displaying
+{
+    enum options
+    {
+        MENU,
+        PLAY,
+        SETTINGS,
+        QUIT,
+        GAME
+    };
+}
 class TextDisp{
 private:
     sf::Text text;
@@ -141,83 +152,81 @@ int main() {
     //Amimated Background
     sf::RectangleShape animatedBackground(sf::Vector2f(1920,1080));
     animatedBackground.setPosition(0,0);
-    //sf::Texture anBack,popupWindow;
-    //anBack.loadFromFile("resources/AnimatedBackground2.png");
-    //popupWindow.loadFromFile("resources/popup.png");
+
 
     animatedBackground.setTexture(&Resources::animatedBackground);
     Animation animation(&Resources::animatedBackground,sf::Vector2u(8,1),0.15f);
     sf::Clock clock;
 
     //Sound
-    sf::Music music, music2, music3;
+    sf::Music music, music2, music3, music5;
     music.openFromFile("resources/GameMusic.flac");
     music2.openFromFile("resources/Music2.flac");
     music3.openFromFile("resources/Music3.flac");
+    music5.openFromFile("resources/Music5.flac");
 
     //music.setVolume(10);
-    music.setVolume(0);
-    music2.setVolume(30);
-    music3.setVolume(30);
+    for (const auto &it: {&music,&music2,&music3,&music5}){
+        it->setVolume(0);
+        it->setLoop(true);
+    }
 
-    //Font
-    sf::Font font1;
-    font1.loadFromFile("resources/font2.ttf");
+
 
 
     Button btn1("   Play", {static_cast<float>(strlen("Play")) * 30.f, 30.f}, 77, sf::Color::Transparent,
                 sf::Color(130,0,2,255));//, sf::Sound sound1);
-    btn1.setFont(font1);
+    btn1.setFont(Resources::defaultFont);
     btn1.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x)/ 8 * 6, static_cast<float>(window.getSize().y) * 55 / 100),
                       sf::Vector2f(static_cast<float>(strlen("Play") * 17), 15));
     std::cout << btn1;
 
     Button btn2("     Settings", {static_cast<float>(strlen("Settings")) * 30.f, 30.f}, 77, sf::Color::Transparent,
                 sf::Color(130,0,2,255));//,sf::Sound sound1);
-    btn2.setFont(font1);
+    btn2.setFont(Resources::defaultFont);
     btn2.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 8 * 6, static_cast<float>(window.getSize().y) * 70 / 100),
                       sf::Vector2f(static_cast<float>(strlen("Settings") * 17), 15));
 
 
     Button btn3("   Quit", {static_cast<float>(strlen("Quit")) * 30.f, 30.f}, 77, sf::Color::Transparent,
                 sf::Color(130,0,2,255));//,sf::Sound sound1);
-    btn3.setFont(font1);
+    btn3.setFont(Resources::defaultFont);
     btn3.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 8 * 6, static_cast<float>(window.getSize().y) * 85 / 100),
                       sf::Vector2f(static_cast<float>(strlen("Quit") * 17), 15));
 
 
     Button opt1(" Yes", {static_cast<float>(strlen("Yes")) * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
-    opt1.setFont(font1);
+    opt1.setFont(Resources::defaultFont);
     opt1.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 25 * 11, static_cast<float>(window.getSize().y) / 7 * 4),
                       sf::Vector2f(static_cast<float>(strlen("Yes")) * 17, 15));
     Button opt2(" No", {static_cast<float>(strlen("No")) * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
-    opt2.setFont(font1);
+    opt2.setFont(Resources::defaultFont);
     opt2.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4),
                       sf::Vector2f(static_cast<float>(strlen("No")) * 17, 15));
 
     Button done("   Done", {static_cast<float>(strlen("Done")) * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
-    done.setFont(font1);
+    done.setFont(Resources::defaultFont);
     done.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4),
                       sf::Vector2f(static_cast<float>(strlen("Play")) * 17, 15));
 
     Button go("   Go", {static_cast<float>(strlen("Go")) * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
-    go.setFont(font1);
+    go.setFont(Resources::defaultFont);
     go.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4),
                     sf::Vector2f(static_cast<float>(strlen("Play")) * 17, 15));
 
     Button VolumeDown("-", {static_cast<float>(strlen("-")) * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
-    VolumeDown.setFont(font1);
+    VolumeDown.setFont(Resources::defaultFont);
     VolumeDown.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 25 * 11, static_cast<float>(window.getSize().y) / 100 * 43),
                       sf::Vector2f(static_cast<float>(strlen("-")) * 5, 15));
     Button VolumeUp("+", {static_cast<float>(strlen("+")) * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
-    VolumeUp.setFont(font1);
+    VolumeUp.setFont(Resources::defaultFont);
     VolumeUp.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 20 * 9),
                       sf::Vector2f(static_cast<float>(strlen("+")) * 17, 15));
 
 
     Popup quit("  Are you sure you\n  want to quit?", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 50, //sf::Color::Black,
                 sf::Color(130,0,2,255),Resources::popupWindow);
-    quit.setFont(font1);
+    quit.setFont(Resources::defaultFont);
     quit.setPosition(sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                   (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2),
                      sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
@@ -225,7 +234,7 @@ int main() {
     std::cout<<quit<<"\n";
     Popup settings("  Audio Level", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 55, //sf::Color::Black,
                    sf::Color(130,0,2,255),Resources::popupWindow);
-    settings.setFont(font1);
+    settings.setFont(Resources::defaultFont);
     settings.setPosition(sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                       (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2),
                          sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
@@ -234,60 +243,57 @@ int main() {
     std::string soundL=std::to_string(static_cast<int>(music.getVolume()+0.1));
     soundL=soundL.substr(0,2);
     TextDisp soundlevel(soundL,45,sf::Color(130,0,2,255));
-    soundlevel.setFont(font1);
+    soundlevel.setFont(Resources::defaultFont);
     soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9));
 
     Popup play("  Enter your username:", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 55, //sf::Color::Black,
                 sf::Color(130,0,2,255),Resources::popupWindow);
-    play.setFont(font1);
+    play.setFont(Resources::defaultFont);
     play.setPosition(sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                   (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2),
                      sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                   (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2));
     Textbox textbox1(30,sf::Color::Yellow,true);
-    textbox1.setFont(font1);
+    textbox1.setFont(Resources::defaultFont);
     textbox1.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 25 * 11, static_cast<float>(window.getSize().y) / 20 * 9));
     textbox1.setLimit(true,12);
 
     music.play();
-    music.setLoop(true);
-    music2.setLoop(true);
-    music3.setLoop(true);
-    int resp = 0;
+
+
+    displaying::options scenario=displaying::MENU;
 
 
     while (window.isOpen()) {
         const float deltaTime=clock.restart().asSeconds();
         window.clear();
-        //window.draw(background);
         window.draw(animatedBackground);
-        switch(resp){
-            case 0:
+        switch(scenario){
+            case displaying::MENU:
                 btn1.drawTo(window);
                 btn2.drawTo(window);
                 btn3.drawTo(window);
                 break;
-            case 1:
+            case displaying::QUIT:
                 quit.draw(window);
                 opt1.drawTo(window);
                 opt2.drawTo(window);
                 break;
-            case 2:
+            case displaying::SETTINGS:
                 settings.draw(window);
                 VolumeUp.drawTo(window);
                 VolumeDown.drawTo(window);
                 soundlevel.draw(window);
                 done.drawTo(window);
                 break;
-            case 3:
+            case displaying::PLAY:
                 play.draw(window);
                 textbox1.drawTo(window);
                 go.drawTo(window);
                 break;
-            case 4:
-                Pac.update();
+            case displaying::GAME:
                 Pac.drawTo(window);
-                std::cout<<"Case4\n";
+                //std::cout<<"Case4\n";
                 break;
             default:
                 break;
@@ -303,12 +309,14 @@ int main() {
                     break;
                 case sf::Event::KeyPressed:
                     Pac.processEvents(event.key.code,true);
+                    Pac.update();
                 case sf::Event::KeyReleased:
                     Pac.processEvents(event.key.code,false);
-                    if(event.key.code==sf::Keyboard::Escape&&resp==0)
-                        resp=1;
-                    if(event.key.code==sf::Keyboard::Escape&&(resp==2||resp==3||resp==4))
-                        resp=0;break;
+                    Pac.update();
+                    if(event.key.code==sf::Keyboard::Escape&&scenario==displaying::GAME)
+                        scenario=displaying::QUIT;
+                    if(event.key.code==sf::Keyboard::Escape&&(scenario==displaying::SETTINGS||scenario==displaying::PLAY))
+                        scenario=displaying::MENU;
                     break;
 
                 case sf::Event::TextEntered:
@@ -323,62 +331,64 @@ int main() {
                     }
                     break;
                 case sf::Event::MouseButtonPressed:
-                    if (go.isMouseOver(window) && resp == 3) {
+                    if (go.isMouseOver(window) && scenario==displaying::PLAY) {
                         window.clear();
                         window.draw(animatedBackground);
                         window.display();
 
                         std::string name=textbox1.getText();
                         player2.setName(name);
-                        if(player2.getEnc()=="Yriv"){
+                        if(player2.getEnc()=="yriv"){
                             music.pause();
                             music2.play();
                         }
-                        if(player2.getEnc()=="Napn"){
+                        if(player2.getEnc()=="napn"){
                             music.pause();
                             music3.play();
+                            std::cout<<music3.getVolume();
                         }
-                        if(player2.getEnc()=="Crgevfbe"){
+                        if(player2.getEnc()=="prgevfbe"){
                             music.pause();
                             //music4.play();
                         }
-                        if(player2.getEnc()=="znevhf"||player2.getEnc()=="Znevhf"){
+                        if(player2.getEnc()=="znevhf"){
                             music.pause();
+                            music5.play();
                         }
-                        resp = 4;
+                        scenario=displaying::GAME;
                     }
-                    if (opt1.isMouseOver(window) && resp == 1) {
+                    if (opt1.isMouseOver(window) && scenario==displaying::QUIT) {
                         window.close();
                         return 0;
                     }
-                    if (opt2.isMouseOver(window) && resp == 1) {
-                        resp = 0;
+                    if (opt2.isMouseOver(window) && scenario==displaying::QUIT) {
+                        scenario=displaying::MENU;
                         continue;
                     }
-                    if (done.isMouseOver(window) && resp == 2) {
-                        resp = 0;
+                    if (done.isMouseOver(window) && scenario==displaying::SETTINGS) {
+                        scenario=displaying::MENU;
                         continue;
                     }
-                    if(VolumeDown.isMouseOver(window)&&resp == 2){
+                    if(VolumeDown.isMouseOver(window) && scenario==displaying::SETTINGS){
                         if(music.getVolume()<15) {
-                            music.setVolume(0);
-                            music2.setVolume(0);
-                            music3.setVolume(0);
+                            for (const auto &it: {&music,&music2,&music3,&music5}){
+                                it->setVolume(0);
+                            }
                         }else{
-                            music.setVolume(music.getVolume()-10);
-                            music2.setVolume(music.getVolume()-10);
-                            music3.setVolume(music.getVolume()-10);
+                            for (const auto &it: {&music,&music2,&music3,&music5}){
+                                it->setVolume(it->getVolume()-10);
+                            }
                         }
                         soundL=std::to_string(static_cast<int>(music.getVolume()+0.1));
                         soundL=soundL.substr(0,2);
                         soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9));
                         soundlevel.setText(soundL);
                     }
-                    if(VolumeUp.isMouseOver(window)&&resp==2){
+                    if(VolumeUp.isMouseOver(window) && scenario==displaying::SETTINGS){
                         if (music.getVolume()<90) {
-                            music.setVolume(music.getVolume() + 10);
-                            music2.setVolume(music2.getVolume() + 10);
-                            music3.setVolume(music3.getVolume() + 10);
+                            for (const auto &it: {&music,&music2,&music3,&music5}){
+                                it->setVolume(it->getVolume() + 10);
+                            }
                         }
                         soundL=std::to_string(static_cast<int>(music.getVolume()+0.1));
                         soundL=soundL.substr(0,2);
@@ -388,23 +398,22 @@ int main() {
                         }
                         soundlevel.setText(soundL);
                     }
-                    if (btn3.isMouseOver(window) && resp == 0) {
-                        resp = 1;
+                    if (btn3.isMouseOver(window) && scenario==displaying::MENU) {
+                        scenario=displaying::QUIT;
                     }
-                    if (btn2.isMouseOver(window) && resp == 0) {
-                        resp = 2;
+                    if (btn2.isMouseOver(window) && scenario==displaying::MENU) {
+                        scenario=displaying::SETTINGS;
                     }
-                    if (btn1.isMouseOver(window) && resp == 0) {
-                        resp = 3;
+                    if (btn1.isMouseOver(window) && scenario==displaying::MENU) {
+                        scenario=displaying::PLAY;
                     }
                     break;
                 default:
-                    //std::cout<<"Am intrat in default,boss\n";
                     break;
             }
         }
         animation.Update(0,deltaTime);
-        animatedBackground.setTextureRect(animation.uvRect);
+        animatedBackground.setTextureRect(animation.getuvRect());
     }
     return 0;
 }

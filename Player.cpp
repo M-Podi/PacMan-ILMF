@@ -3,7 +3,7 @@
 Player::Player(const std::string &name, int scor, time_t time) : name(name), bestScore(scor), timePlayed(time) {}
 
 Player::~Player() {
-    std::cout << "Am apelat deconstructorul \n";
+    std::cout << "Am apelat destructorul \n";
 }
 
 Player::Player(const Player &other) : name(other.name), bestScore(other.bestScore), timePlayed(other.timePlayed) {}
@@ -20,11 +20,8 @@ int Player::getBestScore() const {
     this->name = pName;
     std::string encrypt="";
     for(unsigned long i=0; i<name.length(); i++){
-        if(isupper(name[i])){
-            encrypt += (name[i ]- 'A' + 13) % 26 + 'A';
-        }else if(islower(name[i])){
-            encrypt += (name[i] - 'a' + 13) % 26 + 'a';
-        }
+        if(isalpha(name[i]))
+            encrypt+=(std::tolower(name[i]) - 'a' + 13) % 26 + 'a';
         else
             encrypt += name[i];
     }

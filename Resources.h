@@ -5,9 +5,9 @@
 
 namespace Resources {
 
-//    extern sf::Music music;
-//    extern sf::Music music2;
-//    extern sf::Music music3;
+    extern sf::Music music;
+    extern sf::Music music2;
+    extern sf::Music music3;
 
     extern sf::Font defaultFont;
     extern sf::Texture animatedBackground;

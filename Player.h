@@ -1,5 +1,6 @@
 #include<iostream>
 #include<vector>
+#include <cctype>
 class Player {
 private:
     std::string name,enc_name;
