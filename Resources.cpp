@@ -12,7 +12,7 @@ Resource createResource(const std::string& filename) {
 
     newResource.loadFromFile(filename);
 
-    return std::move(newResource);
+    return newResource;
 }
 
 
