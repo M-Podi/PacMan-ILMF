@@ -8,7 +8,6 @@
 #include "Textbox.h"
 #include "Animation.h"
 #include "Entity.h"
-#include "MainMenu.h"
 #include "Resources.h"
 
 namespace displaying
@@ -310,6 +309,7 @@ int main() {
                 case sf::Event::KeyPressed:
                     Pac.processEvents(event.key.code,true);
                     Pac.update();
+                    break;
                 case sf::Event::KeyReleased:
                     Pac.processEvents(event.key.code,false);
                     Pac.update();
