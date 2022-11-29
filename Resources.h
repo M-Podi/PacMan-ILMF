@@ -1,5 +1,6 @@
 #ifndef OOP_RESOURCES_H
 #define OOP_RESOURCES_H
+
 #include "SFML/Audio.hpp"
 #include "SFML/Graphics.hpp"
 

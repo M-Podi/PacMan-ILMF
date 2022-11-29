@@ -4,11 +4,12 @@
 #include<SFML/Graphics.hpp>
 #include<SFML/System.hpp>
 #include "Button.h"
-#include<cstring>
 #include "Textbox.h"
 #include "Animation.h"
 #include "Entity.h"
 #include "Resources.h"
+#include "TextDisp.h"
+#include "Popup.h"
 
 namespace displaying
 {
@@ -21,117 +22,7 @@ namespace displaying
         GAME
     };
 }
-class TextDisp{
-private:
-    sf::Text text;
-    sf::Vector2f position;
-    std::string txt;
-public:
-    TextDisp(const std::string &popupText, int charSize, sf::Color textColor): txt(popupText) {
-        text.setString(txt);
-        text.setOutlineColor(sf::Color::White);
-        text.setOutlineThickness(5);
-        text.setCharacterSize(charSize);
-        text.setFillColor(textColor);
-    }
-    ~TextDisp() {
-        //std::cout << "Am mai apelat un destructor\n";
-    }
 
-    std::string getText() const {
-        return txt;
-    }
-    void setText(const std::string &other){
-        txt=other;
-        text.setString(txt);
-    }
-    [[maybe_unused]] void setCharSize(int c) {
-        text.setCharacterSize(c);
-        //shadow.setCharacterSize(c + 2);
-    }
-
-    void setFont(sf::Font &fonts) {
-        text.setFont(fonts);
-        //shadow.setFont(fonts);
-    }
-
-    void setPosition(sf::Vector2f square) {
-        float xPos = square.x;
-        float yPos = square.y;
-        text.setPosition(xPos, yPos);
-    }
-
-    void draw(sf::RenderWindow &window) {
-        window.draw(text);
-    }
-    friend std::ostream &operator<<(std::ostream &os, const TextDisp &textdisp);
-};
-class Popup {
-private:
-    sf::RectangleShape popup, shadow;
-    sf::Text text;
-    sf::Vector2f Position;
-    std::string txt;
-public:
-    Popup(const std::string &popupText, sf::Vector2f popupSize, int charSize, sf::Color textColor,sf::Texture &texture): txt(popupText) {
-        popup.setSize(popupSize);
-        //popup.setFillColor(sf::Color::Black);
-        //shadow.setSize(popupSize + sf::Vector2f(1, 1));
-        //shadow.setFillColor(sf::Color::White);
-        text.setString(txt);
-        text.setOutlineColor(sf::Color::White);
-        text.setOutlineThickness(5);
-        text.setCharacterSize(charSize);
-        text.setFillColor(textColor);
-        popup.setTexture(&texture);
-    }
-
-    ~Popup() {
-        //std::cout << "Am mai apelat un destructor\n";
-    }
-
-    std::string getText() const {
-        return txt;
-    }
-    [[maybe_unused]] void setCharSize(int c) {
-        text.setCharacterSize(c);
-        //shadow.setCharacterSize(c + 2);
-    }
-    //void setTexture(const sf::Texture &texture){
-    //    popup.setTexture(texture);
-    //}
-    void setFont(sf::Font &fonts) {
-        text.setFont(fonts);
-        //shadow.setFont(fonts);
-    }
-
-    void setPosition(sf::Vector2f point, sf::Vector2f square) {
-        popup.setPosition(point);
-        shadow.setPosition(point);
-        Position = point;
-
-        float xPos = square.x;
-        float yPos = square.y;
-        text.setPosition(xPos, yPos);
-    }
-
-    void draw(sf::RenderWindow &window) {
-        window.draw(shadow);
-        window.draw(popup);
-        window.draw(text);
-    }
-
-    friend std::ostream &operator<<(std::ostream &os, const Popup &popup);
-};
-
-std::ostream &operator<<(std::ostream &os, const Popup &popup) {
-    os << "A fost generat popup-ul cu textul: " << popup.getText() << "\n";
-    return os;
-}
-std::ostream &operator<<(std::ostream &os, const TextDisp &textdisp) {
-    os << "A fost generat textul: " << textdisp.getText() << "\n";
-    return os;
-}
 
 
 int main() {
@@ -140,7 +31,6 @@ int main() {
     player2.setBestScore(0);
     player2.setName("Podi");
     player2.setTime(0);
-    std::cout << player2;
     sf::VideoMode mode(1920, 1080);
     sf::RenderWindow window(mode, "Pac-Man Podi",sf::Style::Fullscreen);
     Entity Pac(static_cast<float>(window.getSize().x) / 8, static_cast<float>(window.getSize().y) / 8);
@@ -173,54 +63,41 @@ int main() {
 
 
 
-    Button btn1("   Play", {static_cast<float>(strlen("Play")) * 30.f, 30.f}, 77, sf::Color::Transparent,
-                sf::Color(130,0,2,255));//, sf::Sound sound1);
-    btn1.setFont(Resources::defaultFont);
-    btn1.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x)/ 8 * 6, static_cast<float>(window.getSize().y) * 55 / 100),
-                      sf::Vector2f(static_cast<float>(strlen("Play") * 17), 15));
-    std::cout << btn1;
+    Button btn1("   Play", 77,Resources::defaultFont);//, sf::Sound sound1);
+    //btn1.setFont(Resources::defaultFont);
+    btn1.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x)/ 8 * 6, static_cast<float>(window.getSize().y) * 55 / 100));//,sf::Vector2f(static_cast<float>(strlen("Play") * 17), 15));
 
-    Button btn2("     Settings", {static_cast<float>(strlen("Settings")) * 30.f, 30.f}, 77, sf::Color::Transparent,
-                sf::Color(130,0,2,255));//,sf::Sound sound1);
-    btn2.setFont(Resources::defaultFont);
-    btn2.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 8 * 6, static_cast<float>(window.getSize().y) * 70 / 100),
-                      sf::Vector2f(static_cast<float>(strlen("Settings") * 17), 15));
+    Button btn2("     Settings", 77,Resources::defaultFont);//,sf::Sound sound1);
+    //btn2.setFont(Resources::defaultFont);
+    btn2.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 8 * 6, static_cast<float>(window.getSize().y) * 70 / 100));//,sf::Vector2f(static_cast<float>(strlen("Settings") * 17), 15));
 
 
-    Button btn3("   Quit", {static_cast<float>(strlen("Quit")) * 30.f, 30.f}, 77, sf::Color::Transparent,
-                sf::Color(130,0,2,255));//,sf::Sound sound1);
-    btn3.setFont(Resources::defaultFont);
-    btn3.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 8 * 6, static_cast<float>(window.getSize().y) * 85 / 100),
-                      sf::Vector2f(static_cast<float>(strlen("Quit") * 17), 15));
+    Button btn3("   Quit", 77,Resources::defaultFont);//,sf::Sound sound1);
+    //btn3.setFont(Resources::defaultFont);
+    btn3.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 8 * 6, static_cast<float>(window.getSize().y) * 85 / 100));//,sf::Vector2f(static_cast<float>(strlen("Quit") * 17), 15));
 
 
-    Button opt1(" Yes", {static_cast<float>(strlen("Yes")) * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
-    opt1.setFont(Resources::defaultFont);
-    opt1.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 25 * 11, static_cast<float>(window.getSize().y) / 7 * 4),
-                      sf::Vector2f(static_cast<float>(strlen("Yes")) * 17, 15));
-    Button opt2(" No", {static_cast<float>(strlen("No")) * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
-    opt2.setFont(Resources::defaultFont);
-    opt2.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4),
-                      sf::Vector2f(static_cast<float>(strlen("No")) * 17, 15));
+    Button opt1(" Yes", 77,Resources::defaultFont);
+    //opt1.setFont(Resources::defaultFont);
+    opt1.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 25 * 11, static_cast<float>(window.getSize().y) / 7 * 4));//,sf::Vector2f(static_cast<float>(strlen("Yes")) * 17, 15));
+    Button opt2(" No", 77,Resources::defaultFont);
+    //opt2.setFont(Resources::defaultFont);
+    opt2.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4));//,sf::Vector2f(static_cast<float>(strlen("No")) * 17, 15));
 
-    Button done("   Done", {static_cast<float>(strlen("Done")) * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
-    done.setFont(Resources::defaultFont);
-    done.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4),
-                      sf::Vector2f(static_cast<float>(strlen("Play")) * 17, 15));
+    Button done("   Done", 77,Resources::defaultFont);
+    //done.setFont(Resources::defaultFont);
+    done.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4));//,sf::Vector2f(static_cast<float>(strlen("Play")) * 17, 15));
 
-    Button go("   Go", {static_cast<float>(strlen("Go")) * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
-    go.setFont(Resources::defaultFont);
-    go.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4),
-                    sf::Vector2f(static_cast<float>(strlen("Play")) * 17, 15));
+    Button go("   Go", 77,Resources::defaultFont);
+    //go.setFont(Resources::defaultFont);
+    go.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4));//,sf::Vector2f(static_cast<float>(strlen("Play")) * 17, 15));
 
-    Button VolumeDown("-", {static_cast<float>(strlen("-")) * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
-    VolumeDown.setFont(Resources::defaultFont);
-    VolumeDown.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 25 * 11, static_cast<float>(window.getSize().y) / 100 * 43),
-                      sf::Vector2f(static_cast<float>(strlen("-")) * 5, 15));
-    Button VolumeUp("+", {static_cast<float>(strlen("+")) * 30.f, 30.f}, 77, sf::Color::Transparent, sf::Color::Yellow);
-    VolumeUp.setFont(Resources::defaultFont);
-    VolumeUp.setPositions(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 20 * 9),
-                      sf::Vector2f(static_cast<float>(strlen("+")) * 17, 15));
+    Button VolumeDown("-", 77,Resources::defaultFont);
+    //VolumeDown.setFont(Resources::defaultFont);
+    VolumeDown.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 25 * 11, static_cast<float>(window.getSize().y) / 100 * 43));//,sf::Vector2f(static_cast<float>(strlen("-")) * 5, 15));
+    Button VolumeUp("+", 77,Resources::defaultFont);
+    //VolumeUp.setFont(Resources::defaultFont);
+    VolumeUp.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 20 * 9));//,sf::Vector2f(static_cast<float>(strlen("+")) * 17, 15));
 
 
     Popup quit("  Are you sure you\n  want to quit?", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 50, //sf::Color::Black,
@@ -230,7 +107,7 @@ int main() {
                                   (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2),
                      sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                   (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2));
-    std::cout<<quit<<"\n";
+
     Popup settings("  Audio Level", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 55, //sf::Color::Black,
                    sf::Color(130,0,2,255),Resources::popupWindow);
     settings.setFont(Resources::defaultFont);
@@ -269,28 +146,29 @@ int main() {
         window.draw(animatedBackground);
         switch(scenario){
             case displaying::MENU:
-                btn1.drawTo(window);
-                btn2.drawTo(window);
-                btn3.drawTo(window);
+                btn1.draw(window);
+                btn2.draw(window);
+                btn3.draw(window);
                 break;
             case displaying::QUIT:
                 quit.draw(window);
-                opt1.drawTo(window);
-                opt2.drawTo(window);
+                opt1.draw(window);
+                opt2.draw(window);
                 break;
             case displaying::SETTINGS:
                 settings.draw(window);
-                VolumeUp.drawTo(window);
-                VolumeDown.drawTo(window);
+                VolumeUp.draw(window);
+                VolumeDown.draw(window);
                 soundlevel.draw(window);
-                done.drawTo(window);
+                done.draw(window);
                 break;
             case displaying::PLAY:
                 play.draw(window);
                 textbox1.drawTo(window);
-                go.drawTo(window);
+                go.draw(window);
                 break;
             case displaying::GAME:
+                Pac.update(window);
                 Pac.drawTo(window);
                 //std::cout<<"Case4\n";
                 break;
@@ -308,11 +186,11 @@ int main() {
                     break;
                 case sf::Event::KeyPressed:
                     Pac.processEvents(event.key.code,true);
-                    Pac.update();
+
                     break;
                 case sf::Event::KeyReleased:
                     Pac.processEvents(event.key.code,false);
-                    Pac.update();
+
                     if(event.key.code==sf::Keyboard::Escape&&scenario==displaying::GAME)
                         scenario=displaying::QUIT;
                     if(event.key.code==sf::Keyboard::Escape&&(scenario==displaying::SETTINGS||scenario==displaying::PLAY))
@@ -338,20 +216,20 @@ int main() {
 
                         std::string name=textbox1.getText();
                         player2.setName(name);
-                        if(player2.getEnc()=="yriv"){
+                        if(player2.getEnc()==4201227126){
                             music.pause();
                             music2.play();
                         }
-                        if(player2.getEnc()=="napn"){
+                        if(player2.getEnc()==4200760982){
                             music.pause();
                             music3.play();
                             std::cout<<music3.getVolume();
                         }
-                        if(player2.getEnc()=="prgevfbe"){
+                        if(player2.getEnc()==4195453816){
                             music.pause();
                             //music4.play();
                         }
-                        if(player2.getEnc()=="znevhf"){
+                        if(player2.getEnc()==4193874688){
                             music.pause();
                             music5.play();
                         }

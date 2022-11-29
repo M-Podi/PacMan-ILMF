@@ -7,7 +7,7 @@
 #include "Resources.h"
 
 template<typename Resource>
-Resource createResource(const std::string& filename) {
+Resource createResource(const std::string &filename) {
     Resource newResource;
 
     newResource.loadFromFile(filename);
@@ -16,8 +16,7 @@ Resource createResource(const std::string& filename) {
 }
 
 
-
-sf::Font Resources::defaultFont = createResource<sf::Font>("resources/font2.ttf");
+sf::Font Resources::defaultFont = createResource<sf::Font>("resources/IonescuSuge.ttf");
 sf::Texture Resources::popupWindow = createResource<sf::Texture>("resources/popup.png");
 sf::Texture Resources::animatedBackground = createResource<sf::Texture>("resources/AnimatedBackground2.png");
 

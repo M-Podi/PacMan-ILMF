@@ -11,7 +11,7 @@
 
 class Textbox {
 public:
-    Textbox(){}
+    Textbox()=default;
     Textbox(int size,sf::Color color, bool sel){
         setCharacterSize(size);
         limit=60;

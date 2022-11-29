@@ -3,7 +3,8 @@
 #include <cctype>
 class Player {
 private:
-    std::string name,enc_name;
+    std::string name;
+    uint32_t enc_name;
     int bestScore;
     time_t timePlayed;
 public:
@@ -22,17 +23,16 @@ public:
 
     std::string getName() const;
 
-    std::string getEnc() const;
+    uint32_t getEnc() const;
 
     void setTime(time_t time);
 
     time_t getTime() const;
 
-    friend std::ostream &operator<<(std::ostream &os, const Player &other);
+
 
     Player &operator=(const Player &other) = default;
 
 
 };
 
-std::ostream &operator<<(std::ostream &os, const Player &player1);

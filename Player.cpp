@@ -18,17 +18,28 @@ int Player::getBestScore() const {
 
 [[maybe_unused]] void Player::setName(const std::string &pName) {
     this->name = pName;
-    std::string encrypt="";
+    /*std::string encrypt="";
     for(unsigned long i=0; i<name.length(); i++){
         if(isalpha(name[i]))
             encrypt+=(std::tolower(name[i]) - 'a' + 13) % 26 + 'a';
         else
             encrypt += name[i];
     }
-    this->enc_name=encrypt;
+    this->enc_name=encrypt;*/
+    const uint32_t Polynomial = 0x04C11DB7;
+    uint32_t crc = ~0u;
+    //unsigned char* current = (unsigned char*) pName;
+    for(const char &it:pName)
+    {
+        //crc ^= *current++;
+        crc ^= it;
+        for (unsigned int j = 0; j < 8; j++)
+            crc = (crc >> 1) ^ (-int(crc & 1) & Polynomial);
+    }
+    this->enc_name=~crc; // same as crc ^ 0xFFFFFFFF
 }
 
-std::string Player::getEnc() const {
+uint32_t Player::getEnc() const {
     return enc_name;
 }
 
@@ -44,7 +55,3 @@ time_t Player::getTime() const {
     return timePlayed;
 }
 
-std::ostream &operator<<(std::ostream &os, const Player &other) {
-    os << other.getName() << " a obtinut " << other.getBestScore() << " puncte in " << other.getTime() << " secunde\n";
-    return os;
-}
