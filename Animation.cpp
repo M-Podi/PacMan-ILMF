@@ -1,6 +1,6 @@
 #include "Animation.h"
 
-Animation::Animation(sf::Texture *texture, sf::Vector2u imageCount, float switchTime) {
+[[maybe_unused]]Animation::Animation(sf::Texture *texture, sf::Vector2u imageCount, float switchTime) {
     this->imageCount = imageCount;
     this->switchTime = switchTime;
     totalTime = 0.0f;
@@ -9,7 +9,18 @@ Animation::Animation(sf::Texture *texture, sf::Vector2u imageCount, float switch
     uvRect.height = texture->getSize().y / float(imageCount.y);
 }
 
-Animation::~Animation() {}
+Animation::Animation()=default;
+
+Animation::~Animation()=default;
+
+void Animation::Innit(sf::Texture* texture, sf::Vector2u otherimageCount,float otherswitchTime){
+    this->imageCount = otherimageCount;
+    this->switchTime = otherswitchTime;
+    totalTime = 0.0f;
+    currentImage.x = 0;
+    uvRect.width = texture->getSize().x / float(imageCount.x);
+    uvRect.height = texture->getSize().y / float(imageCount.y);
+}
 
 sf::IntRect Animation::getuvRect() {
     return uvRect;

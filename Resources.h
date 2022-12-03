@@ -14,6 +14,7 @@ namespace Resources {
     extern sf::Texture animatedBackground;
 
     extern sf::Texture popupWindow;
+    extern sf::Texture Pac;
 }
 
 

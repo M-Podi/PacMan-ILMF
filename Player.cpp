@@ -1,3 +1,4 @@
+
 #include "Player.h"
 
 Player::Player(const std::string &name, int scor, time_t time) : name(name), bestScore(scor), timePlayed(time) {}
@@ -28,15 +29,13 @@ int Player::getBestScore() const {
     this->enc_name=encrypt;*/
     const uint32_t Polynomial = 0x04C11DB7;
     uint32_t crc = ~0u;
-    //unsigned char* current = (unsigned char*) pName;
     for(const char &it:pName)
     {
-        //crc ^= *current++;
-        crc ^= it;
+        crc ^= std::tolower(it);
         for (unsigned int j = 0; j < 8; j++)
             crc = (crc >> 1) ^ (-int(crc & 1) & Polynomial);
     }
-    this->enc_name=~crc; // same as crc ^ 0xFFFFFFFF
+    this->enc_name=~crc;
 }
 
 uint32_t Player::getEnc() const {

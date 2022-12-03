@@ -1,6 +1,10 @@
+#ifndef OOP_PLAYER_H
+#define OOP_PLAYER_H
+
 #include<iostream>
 #include<vector>
 #include <cctype>
+#include<string.h>
 class Player {
 private:
     std::string name;
@@ -8,7 +12,7 @@ private:
     int bestScore;
     time_t timePlayed;
 public:
-    //Player();
+    Player()=default;
     explicit Player(const std::string &name, int score = 0, time_t time = 0);
 
     Player(const Player &player);
@@ -33,6 +37,6 @@ public:
 
     Player &operator=(const Player &other) = default;
 
-
 };
 
+#endif

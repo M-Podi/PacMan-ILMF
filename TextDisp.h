@@ -19,6 +19,16 @@ public:
         text.setOutlineThickness(5);
         text.setCharacterSize(charSize);
         text.setFillColor(textColor);
+        text.setOrigin(text.getGlobalBounds().getSize().x,text.getLocalBounds().getSize().y);
+    }
+    void Innit(const std::string &popupText, int charSize, sf::Color textColor){
+        txt=popupText;
+        text.setString(txt);
+        text.setOutlineColor(sf::Color::White);
+        text.setOutlineThickness(5);
+        text.setCharacterSize(charSize);
+        text.setFillColor(textColor);
+        text.setOrigin(text.getGlobalBounds().getSize().x,text.getLocalBounds().getSize().y);
     }
     ~TextDisp() = default;
 

@@ -13,6 +13,7 @@ private:
     sf::Vector2f Position;
     std::string txt;
 public:
+    Popup()=default;
     Popup(const std::string &popupText, sf::Vector2f popupSize, int charSize, sf::Color textColor,sf::Texture &texture): txt(popupText) {
         popup.setSize(popupSize);
         text.setString(txt);
@@ -22,7 +23,17 @@ public:
         text.setFillColor(textColor);
         popup.setTexture(&texture);
     }
-
+    void Innit(const std::string &popupText, sf::Vector2f popupSize, int charSize, sf::Color textColor,sf::Texture &texture,sf::Font &fonts) {
+        txt=popupText;
+        popup.setSize(popupSize);
+        text.setString(txt);
+        text.setOutlineColor(sf::Color::White);
+        text.setOutlineThickness(5);
+        text.setCharacterSize(charSize);
+        text.setFillColor(textColor);
+        text.setFont(fonts);
+        popup.setTexture(&texture);
+    }
     ~Popup() = default;
 
     std::string getText() const {

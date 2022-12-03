@@ -25,6 +25,19 @@ public:
         else
             textbox.setString("");
     }
+    void Innit(int size,sf::Color color, bool sel){
+        setCharacterSize(size);
+        limit=60;
+        setColor(color);
+        isSelected=sel;
+        textbox.setCharacterSize(size);
+        textbox.setFillColor(color);
+        if(sel){
+            textbox.setString("_");
+        }
+        else
+            textbox.setString("");
+    }
     void setFont(sf::Font &font){
         textbox.setFont(font);
     }

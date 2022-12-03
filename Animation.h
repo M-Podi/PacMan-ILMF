@@ -9,8 +9,10 @@
 
 class Animation {
 public:
-    Animation(sf::Texture* texture, sf::Vector2u imageCount,float switchTime);
+    Animation();
+    [[maybe_unused]]Animation(sf::Texture* texture, sf::Vector2u imageCount,float switchTime);
     ~Animation();
+    void Innit(sf::Texture* texture, sf::Vector2u otherimageCount,float otherswitchTime);
     void Update(int row,float deltaTime);
     sf::IntRect getuvRect();
 private:

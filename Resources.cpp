@@ -19,4 +19,4 @@ Resource createResource(const std::string &filename) {
 sf::Font Resources::defaultFont = createResource<sf::Font>("resources/IonescuSuge.ttf");
 sf::Texture Resources::popupWindow = createResource<sf::Texture>("resources/popup.png");
 sf::Texture Resources::animatedBackground = createResource<sf::Texture>("resources/AnimatedBackground2.png");
-
+sf::Texture Resources::Pac = createResource<sf::Texture>("resources/PAC3.png");
