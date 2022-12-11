@@ -18,8 +18,9 @@ public:
         Size2.x=Size.x;
         Size2.y=Size.y/3;
         sidebar=(Screen_Width-Size.x*map_sketch.size())/2;
-        for(int i = 0;i < map_sketch.size();i++){
-            for(int j = 0; j < map_sketch[i].size();j++){
+        int n = static_cast<int>(map_sketch.size());
+        for(int i = 0;i < n;i++){
+            for(int j = 0; j < n;j++){
                 switch(map_sketch[j][i]){
                     case '#':
                         wall.emplace_back(sf::RectangleShape());
@@ -44,6 +45,7 @@ public:
                         gate.setSize(Size2);
                         gate.setPosition(sidebar+i*Size.x,j*Size.y);
                         gate.setFillColor(sf::Color::Cyan);
+                        break;
                     default:
                         if(map_sketch[j][i]>=0&&map_sketch[i][j]<=9){
                             Ghost_pos.emplace_back(sf::Vector2f());
