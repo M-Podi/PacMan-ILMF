@@ -66,7 +66,8 @@ void Entity::update(float deltaTime,std::vector<sf::RectangleShape> wall) {
         movement.x -= 0.3f;
     if (right)
         movement.x += 0.3f;
-    for (int i = 0; i < wall.size(); i++) {
+    int n = static_cast<int>(wall.size());
+    for (int i = 0; i < n; i++) {
         if (rect.getGlobalBounds().intersects(wall[i].getGlobalBounds()))
             w = true;
     }
