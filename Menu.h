@@ -1,6 +1,3 @@
-//
-// Created by Matei on 11/26/2022.
-//
 #pragma once
 #ifndef OOP_MENU_H
 #define OOP_MENU_H
@@ -17,6 +14,7 @@
 #include "TextDisp.h"
 #include "Popup.h"
 #include "Player.h"
+#include "Map.h"
 
 namespace displaying
 {
@@ -29,6 +27,29 @@ namespace displaying
         GAME
     };
 }
+std::vector<std::string> map_sketch = {
+        " ################### ",
+        " #........#........# ",
+        " #o##.###.#.###.##o# ",
+        " #.................# ",
+        " #.##.#.#####.#.##.# ",
+        " #....#...#...#....# ",
+        " ####.### # ###.#### ",
+        "    #.#   0   #.#    ",
+        "#####.# ##=## #.#####",
+        "     .  #123#  .     ",
+        "#####.# ##### #.#####",
+        "    #.#       #.#    ",
+        " ####.# ##### #.#### ",
+        " #........#........# ",
+        " #.##.###.#.###.##.# ",
+        " #o.#.....P.....#.o# ",
+        " ##.#.#.#####.#.#.## ",
+        " #....#...#...#....# ",
+        " #.######.#.######.# ",
+        " #.................# ",
+        " ################### "
+};
 
 class Menu {
 private:
@@ -42,17 +63,20 @@ private:
     displaying::options scenario=displaying::MENU;
     Textbox textbox1;
     Entity Pac;
+
     Player player2;
     sf::Music music, music2, music3, music5;
     std::string soundL;
     TextDisp soundlevel;
+    Map map;
 
     void initWindow(){
         player2.setBestScore(0);
         player2.setName("Podi");
         player2.setTime(0);
         this->window.create(sf::VideoMode::getDesktopMode(), "Pac-Man ILMF",sf::Style::Fullscreen);
-        Pac.Innit(static_cast<float>(window.getSize().y) / 21, static_cast<float>(window.getSize().y) / 21);
+        map.Innit(map_sketch.size(),window.getSize().y,window.getSize().x,map_sketch);
+        Pac.Innit(static_cast<float>(window.getSize().y) / 22, static_cast<float>(window.getSize().y) / 22);
         animatedBackground.setSize(sf::Vector2f(1920,1080));
         animatedBackground.setPosition(0,0);
         animatedBackground.setTexture(&Resources::animatedBackground);
@@ -150,12 +174,20 @@ public:
                     break;
                 case sf::Event::MouseButtonPressed:
                     if (go.isMouseOver(window) && scenario == displaying::PLAY) {
-                        window.clear();
-                        //window.draw(animatedBackground);
-                        window.display();
-
                         std::string name = textbox1.getText();
                         player2.setName(name);
+                        try {
+                            if(!name.length())
+                                throw name.length();
+                        }
+                        catch (int x) {
+                            std::cout<<"Please enter a name with more than "<<x<<" letters";
+                            continue;
+                        }
+                        window.clear();
+                        window.display();
+
+
                         if (player2.getEnc() == 4201227126) {
                             music.pause();
                             music2.play();
@@ -173,11 +205,11 @@ public:
                             music.pause();
                             music5.play();
                         }
+                        Pac.setPosition(map.getPac_pos());
                         scenario = displaying::GAME;
                     }
                     if (opt1.isMouseOver(window) && scenario == displaying::QUIT) {
                         window.close();
-                        //return 0;
                     }
                     if (opt2.isMouseOver(window) && scenario == displaying::QUIT) {
                         scenario = displaying::MENU;
@@ -236,7 +268,7 @@ public:
         }
         animation1.Update(0,deltaTime);
         animatedBackground.setTextureRect(animation1.getuvRect());
-        Pac.update2(deltaTime);
+        Pac.update(deltaTime,map.getWalls());
     };
     void render() {
         this->window.clear();
@@ -265,9 +297,8 @@ public:
                 go.draw(window);
                 break;
             case displaying::GAME:
-                Pac.update(window);
+                map.drawTo(window);
                 Pac.drawTo(window);
-                //std::cout<<"Case4\n";
                 break;
             default:
                 break;
@@ -278,6 +309,5 @@ public:
         return this->window;
     };
 };
-
 
 #endif //OOP_MENU_H
