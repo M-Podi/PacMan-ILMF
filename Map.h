@@ -11,7 +11,7 @@ class Map {
     sf::RectangleShape gate, border1,border2;
     sf::Vector2f Size,Pac_pos,Size2,Start_Pos;
     std::vector<sf::Vector2f> Ghost_pos;
-    int x=0;
+//    int x=0;
 //    std::vector<sf::Sprite> bridge;
     int sidebar;
 public:
