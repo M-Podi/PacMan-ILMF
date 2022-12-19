@@ -1,34 +1,20 @@
 #include "Textbox.h"
 Textbox::Textbox()=default;
-[[maybe_unused]] Textbox::Textbox(int size,sf::Color color, bool sel){
+Textbox::Textbox(int size,sf::Color color, bool sel,sf::Font &fonts){
     setCharacterSize(size);
     limit=60;
     setColor(color);
     isSelected=sel;
     textbox.setCharacterSize(size);
     textbox.setFillColor(color);
+    textbox.setFont(fonts);
     if(sel){
         textbox.setString("_");
     }
     else
         textbox.setString("");
 }
-void Textbox::Innit(int size,sf::Color color, bool sel){
-    setCharacterSize(size);
-    limit=60;
-    setColor(color);
-    isSelected=sel;
-    textbox.setCharacterSize(size);
-    textbox.setFillColor(color);
-    if(sel){
-        textbox.setString("_");
-    }
-    else
-        textbox.setString("");
-}
-void Textbox::setFont(sf::Font &font){
-    textbox.setFont(font);
-}
+
 void Textbox::setPosition(sf::Vector2f pos){
     textbox.setPosition(pos);
 }

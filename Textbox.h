@@ -11,9 +11,7 @@
 class Textbox {
 public:
     Textbox();
-    [[maybe_unused]] Textbox(int size,sf::Color color, bool sel);
-    void Innit(int size,sf::Color color, bool sel);
-    void setFont(sf::Font &font);
+    Textbox(int size,sf::Color color, bool sel,sf::Font &fonts);
     void setPosition(sf::Vector2f pos);
     void setLimit(bool ToF);
     void setLimit(bool ToF, int lim);

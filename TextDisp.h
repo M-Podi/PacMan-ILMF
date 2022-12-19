@@ -10,18 +10,17 @@ protected:
     std::string txt;
 public:
     TextDisp();
-    TextDisp(const std::string &popupText, int charSize, sf::Color textColor);
-    void Innit(const std::string &popupText, int charSize, sf::Color textColor);
+    TextDisp(const std::string &popupText, int charSize, sf::Color textColor,sf::Font &fonts);
     ~TextDisp();
 
     std::string getText() const;
     void setText(const std::string &other);
     [[maybe_unused]] void setCharSize(int c);
-    void setFont(sf::Font &fonts);
 
     void setPosition(sf::Vector2f square);
     [[maybe_unused]] void setTextColor(sf::Color textColor);
 
+    //virtual void draw(sf::RenderWindow &window);
     virtual void draw(sf::RenderWindow &window);
 };
 

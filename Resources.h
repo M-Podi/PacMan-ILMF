@@ -16,6 +16,8 @@ namespace Resources {
 
     extern sf::Texture popupWindow;
     extern sf::Texture Pac;
+    extern sf::Texture wall;
+    extern sf::Texture bridge;
 }
 
 

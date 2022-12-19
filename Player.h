@@ -1,6 +1,7 @@
 #ifndef OOP_PLAYER_H
 #define OOP_PLAYER_H
 
+#include "Exceptions.h"
 #include<iostream>
 #include<vector>
 #include <cctype>

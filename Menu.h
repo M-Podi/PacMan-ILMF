@@ -24,101 +24,91 @@ namespace displaying
         PLAY,
         SETTINGS,
         QUIT,
-        GAME
+        GAME,
+        WON,
+        LOST,
     };
 }
-std::vector<std::string> map_sketch = {
-        " ################### ",
-        " #........#........# ",
-        " #o##.###.#.###.##o# ",
-        " #.................# ",
-        " #.##.#.#####.#.##.# ",
-        " #....#...#...#....# ",
-        " ####.### # ###.#### ",
-        "    #.#   0   #.#    ",
-        "#####.# ##=## #.#####",
-        "     .  #123#  .     ",
-        "#####.# ##### #.#####",
-        "    #.#       #.#    ",
-        " ####.# ##### #.#### ",
-        " #........#........# ",
-        " #.##.###.#.###.##.# ",
-        " #o.#.....P.....#.o# ",
-        " ##.#.#.#####.#.#.## ",
-        " #....#...#...#....# ",
-        " #.######.#.######.# ",
-        " #.................# ",
-        " ################### "
-};
 
 class Menu {
 private:
-    sf::RenderWindow window;
+
+    std::vector<std::string> map_sketch = {
+            " ################### ",
+            " #........#........# ",
+            " #o##.###.#.###.##o# ",
+            " #.................# ",
+            " #.##.#.#####.#.##.# ",
+            " #....#...#...#....# ",
+            " ####.### # ###.#### ",
+            "    #.#   0   #.#    ",
+            "#####.# ##=## #.#####",
+            "     .  #123#  .     ",
+            "#####.# ##### #.#####",
+            "    #.#       #.#    ",
+            " ####.# ##### #.#### ",
+            " #........#........# ",
+            " #.##.###.#.###.##.# ",
+            " #o.#.....P.....#.o# ",
+            " ##.#.#.#####.#.#.## ",
+            " #....#...#...#....# ",
+            " #.######.#.######.# ",
+            " #.................# ",
+            " ################### "
+    };
+    sf::RenderWindow window{sf::VideoMode::getDesktopMode(),"Pac-Man ILMF",sf::Style::Fullscreen};
     sf::Event event;
     sf::RectangleShape animatedBackground;
     sf::Clock clock;
-    Animation animation1;
-    Button btn1,btn2,btn3,opt1,opt2,done,go,VolumeDown,VolumeUp;
-    Popup quit,settings,play;
+    Animation animation1{&Resources::animatedBackground,sf::Vector2u(8,1),0.15f};
+    Button btn1{"Play", 77,Resources::defaultFont},btn2{"Settings", 77,Resources::defaultFont},btn3{"Quit", 77,Resources::defaultFont},\
+    opt1{"Yes", 77,Resources::defaultFont},opt2{"No", 77, Resources::defaultFont},done{"Done", 77,Resources::defaultFont},\
+    go{"Go", 77,Resources::defaultFont},VolumeDown{"-", 77,Resources::defaultFont},VolumeUp{"+", 77,Resources::defaultFont};
+    Popup quit{"  Are you sure you\n  want to quit?", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 50,
+               sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont},\
+    settings{"  Audio Level", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 55,
+                        sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont},\
+                        play{"  Enter your username:", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 55,
+                             sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont};
     displaying::options scenario=displaying::MENU;
-    Textbox textbox1;
-    Entity Pac;
+    Textbox textbox1{30,sf::Color::Yellow,true,Resources::defaultFont};
+    //Entity Pac{static_cast<float>(window.getSize().y) / 21, static_cast<float>(window.getSize().y) / 21};
 
     Player player2;
     sf::Music music, music2, music3, music5;
     std::string soundL;
-    TextDisp soundlevel;
+    TextDisp soundlevel{soundL,45,sf::Color(130,0,2,255),Resources::defaultFont},score{"0",45,sf::Color(130,0,2,255),Resources::defaultFont};
     Map map;
+    int Scor=0,normalPoints,PowerPoints;
 
-    void initWindow(){
-        player2.setBestScore(0);
-        player2.setName("Podi");
-        player2.setTime(0);
-        this->window.create(sf::VideoMode::getDesktopMode(), "Pac-Man ILMF",sf::Style::Fullscreen);
-        map.Innit(map_sketch.size(),window.getSize().y,window.getSize().x,map_sketch);
-        Pac.Innit(static_cast<float>(window.getSize().y) / 22, static_cast<float>(window.getSize().y) / 22);
+public:
+    Menu(){
+        this->window.create(sf::VideoMode::getDesktopMode(),"Pac-Man ILMF",sf::Style::Fullscreen);
+        this->window.setVerticalSyncEnabled(true);
         animatedBackground.setSize(sf::Vector2f(1920,1080));
         animatedBackground.setPosition(0,0);
         animatedBackground.setTexture(&Resources::animatedBackground);
-        animation1.Innit(&Resources::animatedBackground,sf::Vector2u(8,1),0.15f);
-        btn1.Innit("Play", 77,Resources::defaultFont);
         btn1.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x)/ 8 * 6, static_cast<float>(window.getSize().y) * 55 / 100));
-        btn2.Innit("Settings", 77,Resources::defaultFont);
         btn2.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 8 * 6, static_cast<float>(window.getSize().y) * 70 / 100));
-        btn3.Innit("Quit", 77,Resources::defaultFont);//,sf::Sound sound1);
         btn3.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 8 * 6, static_cast<float>(window.getSize().y) * 85 / 100));
-        opt1.Innit("Yes", 77,Resources::defaultFont);
         opt1.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 25 * 11, static_cast<float>(window.getSize().y) / 7 * 4));
-        opt2.Innit("No", 77,Resources::defaultFont);
         opt2.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4));
-        done.Innit("Done", 77,Resources::defaultFont);
         done.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4));
-        go.Innit("Go", 77,Resources::defaultFont);
         go.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4));
-        VolumeDown.Innit("-", 77,Resources::defaultFont);
         VolumeDown.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 26 * 11, static_cast<float>(window.getSize().y) / 100*47));
-        VolumeUp.Innit("+", 77,Resources::defaultFont);
         VolumeUp.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 100*47));
-        play.Innit("  Enter your username:", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 55,
-                sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont);
         play.setPosition(sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                       (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2),
                          sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                       (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2));
-        settings.Innit("  Audio Level", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 55,
-                       sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont);
         settings.setPosition(sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                           (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2),
                              sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                           (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2));
-        quit.Innit("  Are you sure you\n  want to quit?", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 50,
-                   sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont);
         quit.setPosition(sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                       (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2),
                          sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                       (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2));
-        textbox1.Innit(30,sf::Color::Yellow,true);
-        textbox1.setFont(Resources::defaultFont);
         textbox1.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 25 * 11, static_cast<float>(window.getSize().y) / 20 * 9));
         textbox1.setLimit(true,12);
         music.openFromFile("resources/GameMusic.flac");
@@ -131,14 +121,8 @@ private:
         }
         soundL=std::to_string(static_cast<int>(music.getVolume()+0.1));
         soundL.resize(1);
-        soundlevel.Innit(soundL,45,sf::Color(130,0,2,255));
-        soundlevel.setFont(Resources::defaultFont);
         soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9));
         music.play();
-    }
-public:
-    Menu(){
-        initWindow();
     };
     ~Menu()=default;
 
@@ -150,16 +134,13 @@ public:
                     window.close();
                     break;
                 case sf::Event::KeyPressed:
-                    Pac.processEvents(event.key.code, true);
-                    break;
-                case sf::Event::KeyReleased:
-                    Pac.processEvents(event.key.code, false);
-
                     if (event.key.code == sf::Keyboard::Escape && scenario == displaying::GAME)
                         scenario = displaying::QUIT;
                     if (event.key.code == sf::Keyboard::Escape &&
                         (scenario == displaying::SETTINGS || scenario == displaying::PLAY))
                         scenario = displaying::MENU;
+                    break;
+                case sf::Event::KeyReleased:
                     break;
                 case sf::Event::TextEntered:
                     textbox1.typedOn(event);
@@ -175,38 +156,31 @@ public:
                 case sf::Event::MouseButtonPressed:
                     if (go.isMouseOver(window) && scenario == displaying::PLAY) {
                         std::string name = textbox1.getText();
-                        player2.setName(name);
-                        try {
-                            if(!name.length())
-                                throw name.length();
+                        try{
+                            player2=Player(name);
+                            if (player2.getEnc() == 4201227126) {
+                                music.pause();
+                                music2.play();
+                            }
+                            if (player2.getEnc() == 4200760982) {
+                                music.pause();
+                                music3.play();
+                                std::cout << music3.getVolume();
+                            }
+                            if (player2.getEnc() == 4195453816) {
+                                music.pause();
+                            }
+                            if (player2.getEnc() == 4193874688) {
+                                music.pause();
+                                music5.play();
+                            }
+                            map.Innit(map_sketch.size(),window.getSize().y,window.getSize().x,map_sketch);
+                            //Pac.setPosition(map.getPac_pos());
+                            normalPoints=map.getPoints().size();
+                            PowerPoints=map.getPowerup().size();
+                            scenario = displaying::GAME;
                         }
-                        catch (int x) {
-                            std::cout<<"Please enter a name with more than "<<x<<" letters";
-                            continue;
-                        }
-                        window.clear();
-                        window.display();
-
-
-                        if (player2.getEnc() == 4201227126) {
-                            music.pause();
-                            music2.play();
-                        }
-                        if (player2.getEnc() == 4200760982) {
-                            music.pause();
-                            music3.play();
-                            std::cout << music3.getVolume();
-                        }
-                        if (player2.getEnc() == 4195453816) {
-                            music.pause();
-                            //music4.play();
-                        }
-                        if (player2.getEnc() == 4193874688) {
-                            music.pause();
-                            music5.play();
-                        }
-                        Pac.setPosition(map.getPac_pos());
-                        scenario = displaying::GAME;
+                        catch(InvalidNameError){}
                     }
                     if (opt1.isMouseOver(window) && scenario == displaying::QUIT) {
                         window.close();
@@ -265,10 +239,19 @@ public:
                 default:
                     break;
             }
+
         }
+
         animation1.Update(0,deltaTime);
         animatedBackground.setTextureRect(animation1.getuvRect());
-        Pac.update(deltaTime,map.getWalls());
+        Scor=(normalPoints-map.getPoints().size())*10+(PowerPoints-map.getPowerup().size())*30;
+        score.setText(std::to_string(Scor));
+        score.setPosition(sf::Vector2f(0,0));
+        if(scenario==displaying::GAME){
+//            Pac.handleInput(map.getWalls());
+//            Pac.move(map.getPoints(),map.getPowerup(),map_sketch,window.getSize().x);
+//            Pac.update2(deltaTime);
+        }
     };
     void render() {
         this->window.clear();
@@ -298,7 +281,12 @@ public:
                 break;
             case displaying::GAME:
                 map.drawTo(window);
-                Pac.drawTo(window);
+                //Pac.drawTo(window);
+                score.draw(window);
+                break;
+            case displaying::WON:
+                break;
+            case displaying::LOST:
                 break;
             default:
                 break;

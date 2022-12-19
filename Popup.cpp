@@ -1,26 +1,18 @@
 #include "Popup.h"
 Popup::Popup()=default;
 Popup::~Popup()=default;
-[[maybe_unused]] Popup::Popup(const std::string &popupText, sf::Vector2f popupSize, int charSize, sf::Color textColor,sf::Texture &texture): txt(popupText) {
-    popup.setSize(popupSize);
-    text.setString(txt);
-    text.setOutlineColor(sf::Color::White);
-    text.setOutlineThickness(5);
-    text.setCharacterSize(charSize);
-    text.setFillColor(textColor);
-    popup.setTexture(&texture);
-}
-void Popup::Innit(const std::string &popupText, sf::Vector2f popupSize, int charSize, sf::Color textColor,sf::Texture &texture,sf::Font &fonts) {
+Popup::Popup(const std::string &popupText, sf::Vector2f popupSize, int charSize, sf::Color textColor,sf::Texture &texture,sf::Font &fonts) {
     txt=popupText;
     popup.setSize(popupSize);
+    popup.setTexture(&texture);
     text.setString(txt);
     text.setOutlineColor(sf::Color::White);
     text.setOutlineThickness(5);
     text.setCharacterSize(charSize);
     text.setFillColor(textColor);
     text.setFont(fonts);
-    popup.setTexture(&texture);
 }
+
 std::string Popup::getText() const {
     return txt;
 }
@@ -32,7 +24,6 @@ void Popup::setFont(sf::Font &fonts) {
 }
 void Popup::setPosition(sf::Vector2f point, sf::Vector2f square) {
     popup.setPosition(point);
-    shadow.setPosition(point);
     Position = point;
 
     float xPos = square.x;
@@ -40,7 +31,6 @@ void Popup::setPosition(sf::Vector2f point, sf::Vector2f square) {
     text.setPosition(xPos, yPos);
 }
 void Popup::draw(sf::RenderWindow &window) {
-    window.draw(shadow);
     window.draw(popup);
     window.draw(text);
 }

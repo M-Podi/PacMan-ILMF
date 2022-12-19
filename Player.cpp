@@ -1,7 +1,10 @@
-
 #include "Player.h"
 
-Player::Player(const std::string &name, int scor, time_t time) : name(name), bestScore(scor), timePlayed(time) {}
+
+Player::Player(const std::string &name, int scor, time_t time) : name(name), bestScore(scor), timePlayed(time) {
+    if(name.empty())
+        throw InvalidNameError("Name cannot be empty");
+}
 
 Player::~Player() {
     std::cout << "Am apelat destructorul \n";

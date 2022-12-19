@@ -5,13 +5,12 @@
 class Popup:TextDisp {
 private:
     sf::RectangleShape popup, shadow;
-    sf::Text text;
+//    sf::Text text;
     sf::Vector2f Position;
-    std::string txt;
+//    std::string txt;
 public:
     Popup();
-    [[maybe_unused]] Popup(const std::string &popupText, sf::Vector2f popupSize, int charSize, sf::Color textColor,sf::Texture &texture);
-    void Innit(const std::string &popupText, sf::Vector2f popupSize, int charSize, sf::Color textColor,sf::Texture &texture,sf::Font &fonts);
+    Popup(const std::string &popupText, sf::Vector2f popupSize, int charSize, sf::Color textColor,sf::Texture &texture,sf::Font &fonts);
     ~Popup();
 
     std::string getText() const;
@@ -19,7 +18,7 @@ public:
     void setFont(sf::Font &fonts);
 
     void setPosition(sf::Vector2f point, sf::Vector2f square);
-    void draw(sf::RenderWindow &window);
+    void draw(sf::RenderWindow &window) override;
 };
 
 #endif //OOP_POPUP_H
