@@ -54,7 +54,7 @@ int main() {
 //    entities.back()->setPosition(map.getPac_pos());
 //    sf::Event ev;
 //
-//    Player player("");
+//    Player player("aa");
 //
 //    while (window.isOpen()) {
 //        const float deltaTime=clock.restart().asSeconds();

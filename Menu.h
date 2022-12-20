@@ -67,7 +67,7 @@ private:
     Popup quit{"  Are you sure you\n  want to quit?", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 50,
                sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont},\
     settings{"  Audio Level", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 55,
-                        sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont},\
+             sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont},\
                         play{"  Enter your username:", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 55,
                              sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont};
     displaying::options scenario=displaying::MENU;
@@ -83,8 +83,7 @@ private:
 
 public:
     Menu(){
-        this->window.create(sf::VideoMode::getDesktopMode(),"Pac-Man ILMF",sf::Style::Fullscreen);
-        this->window.setVerticalSyncEnabled(true);
+        window.setVerticalSyncEnabled(true);
         animatedBackground.setSize(sf::Vector2f(1920,1080));
         animatedBackground.setPosition(0,0);
         animatedBackground.setTexture(&Resources::animatedBackground);
@@ -124,7 +123,7 @@ public:
         soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9));
         music.play();
     };
-    ~Menu()=default;
+    ~Menu() { window.close(); };
 
     void update(){
         const float deltaTime=clock.restart().asSeconds();
@@ -156,31 +155,31 @@ public:
                 case sf::Event::MouseButtonPressed:
                     if (go.isMouseOver(window) && scenario == displaying::PLAY) {
                         std::string name = textbox1.getText();
-                        try{
-                            player2=Player(name);
-                            if (player2.getEnc() == 4201227126) {
-                                music.pause();
-                                music2.play();
-                            }
-                            if (player2.getEnc() == 4200760982) {
-                                music.pause();
-                                music3.play();
-                                std::cout << music3.getVolume();
-                            }
-                            if (player2.getEnc() == 4195453816) {
-                                music.pause();
-                            }
-                            if (player2.getEnc() == 4193874688) {
-                                music.pause();
-                                music5.play();
-                            }
-                            map.Innit(map_sketch.size(),window.getSize().y,window.getSize().x,map_sketch);
-                            //Pac.setPosition(map.getPac_pos());
-                            normalPoints=map.getPoints().size();
-                            PowerPoints=map.getPowerup().size();
-                            scenario = displaying::GAME;
+                        //try{
+                        player2=Player(name);
+                        if (player2.getEnc() == 4201227126) {
+                            music.pause();
+                            music2.play();
                         }
-                        catch(InvalidNameError){}
+                        if (player2.getEnc() == 4200760982) {
+                            music.pause();
+                            music3.play();
+                            std::cout << music3.getVolume();
+                        }
+                        if (player2.getEnc() == 4195453816) {
+                            music.pause();
+                        }
+                        if (player2.getEnc() == 4193874688) {
+                            music.pause();
+                            music5.play();
+                        }
+                        map.Innit(map_sketch.size(),window.getSize().y,window.getSize().x,map_sketch);
+                        //Pac.setPosition(map.getPac_pos());
+                        normalPoints=map.getPoints().size();
+                        PowerPoints=map.getPowerup().size();
+                        scenario = displaying::GAME;
+                        //}
+                        //catch(InvalidNameError){}
                     }
                     if (opt1.isMouseOver(window) && scenario == displaying::QUIT) {
                         window.close();
