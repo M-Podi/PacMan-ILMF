@@ -28,7 +28,7 @@ int Player::getBestScore() const {
     {
         crc ^= std::tolower(it);
         for (unsigned int j = 0; j < 8; j++)
-            crc = (crc >> 1) ^ (-int(crc & 1) & Polynomial);
+            crc = (crc >> 1) ^ (-(int32_t(crc & 1) & Polynomial));
     }
     this->enc_name=~crc;
 }
