@@ -5,7 +5,7 @@
 #include "Pacman.h"
 
 
-void Pacman::handleMovement(std::vector<sf::RectangleShape> wall) {
+void Pacman::handleMovement(const std::vector<sf::RectangleShape> &wall) {
 
     if (currentDirection != NONE) return;
     remaining = rect.getSize().x;
