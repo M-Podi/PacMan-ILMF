@@ -194,7 +194,7 @@ public:
                             entities.push_back(std::make_shared<Pacman>(window.getSize().y/map_sketch.size(),window.getSize().y/map_sketch.size()));
                             entities.back()->setPosition(map.getPac_pos());
                             GhostPos=map.getGhost_pos();
-                            for(int i=0;i<GhostPos.size();i++){
+                            for(int i=0;i<static_cast<int>(GhostPos.size());i++){
                                 entities.push_back(std::make_shared<Ghosts>(window.getSize().y/map_sketch.size(),window.getSize().y/map_sketch.size(),colors[i]));
                                 entities.back()->setPosition(GhostPos[i]);
                             }
