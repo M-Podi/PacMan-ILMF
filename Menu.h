@@ -2,6 +2,7 @@
 #ifndef OOP_MENU_H
 #define OOP_MENU_H
 #include<iostream>
+#include <memory>
 #include<SFML/Audio.hpp>
 #include<SFML/Graphics.hpp>
 #include<SFML/System.hpp>
