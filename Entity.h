@@ -22,6 +22,7 @@ class Entity {
 public:
     Entity();
     Entity(float x, float y,sf::Texture &texture,int frames);
+    virtual ~Entity()=default;
     void setPosition(sf::Vector2f Pos);
     void drawTo(sf::RenderWindow &window);
     virtual void handleMovement(std::vector<sf::RectangleShape> wall)=0;
