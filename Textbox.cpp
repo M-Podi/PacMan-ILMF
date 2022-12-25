@@ -25,17 +25,17 @@ void Textbox::setLimit(bool ToF, int lim){
     hasLimit = ToF;
     limit =lim;
 }
-void Textbox::setSelected(bool sel){
-    isSelected=sel;
-    if(!sel) {
-        std::string t=text.str();
-        std::string newT="";
-        for(unsigned long i = 0;i<t.length()-1;i++){
-            newT+=t[i];
-        }
-        textbox.setString(newT);
-    }
-}
+//void Textbox::setSelected(bool sel){
+//    isSelected=sel;
+//    if(!sel) {
+//        std::string t=text.str();
+//        std::string newT="";
+//        for(unsigned long i = 0;i<t.length()-1;i++){
+//            newT+=t[i];
+//        }
+//        textbox.setString(newT);
+//    }
+//}
 std::string Textbox::getText(){
     return text.str();
 }

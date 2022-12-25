@@ -20,17 +20,14 @@ public:
 
     ~Player();
 
-    void setBestScore(int score);
-
-    int getBestScore() const;
 
     void setName(const std::string &name);
 
-    std::string getName() const;
+
 
     uint32_t getEnc() const;
 
-    void setTime(time_t time);
+
 
     time_t getTime() const;
 
