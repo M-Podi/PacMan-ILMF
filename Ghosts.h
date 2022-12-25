@@ -9,7 +9,7 @@ class Ghosts:public Entity {
 public:
     Ghosts()=default;
     Ghosts(float x, float y,sf::Texture &color):Entity(x,y,color,2){};
-    void handleMovement(std::vector<sf::RectangleShape> wall) override;
+    void handleMovement(const std::vector<sf::RectangleShape> &wall) override;
     Entity* clone() const override { return new Ghosts(*this); }
 };
 

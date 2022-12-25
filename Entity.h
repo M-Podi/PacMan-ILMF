@@ -25,7 +25,7 @@ public:
     virtual ~Entity()=default;
     void setPosition(sf::Vector2f Pos);
     void drawTo(sf::RenderWindow &window);
-    virtual void handleMovement(std::vector<sf::RectangleShape> wall)=0;
+    virtual void handleMovement(const std::vector<sf::RectangleShape> &wall)=0;
     bool canMove(const sf::Vector2<float>& move,const std::vector<sf::RectangleShape> &wall);
     void move(std::vector<sf::CircleShape>& point,std::vector<sf::CircleShape>& powerup,const std::vector<std::string> &map_sketch,int screenSize);
     void update2(float deltaTime);

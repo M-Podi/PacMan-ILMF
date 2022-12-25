@@ -21,7 +21,7 @@ public:
     ~Player();
 
 
-    void setName(const std::string &name);
+    //void setName(const std::string &name);
 
 
 
@@ -29,7 +29,7 @@ public:
 
 
 
-    time_t getTime() const;
+    //time_t getTime() const;
 
 
     Player& operator = (Player other) {
