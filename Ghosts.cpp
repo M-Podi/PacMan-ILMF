@@ -2,8 +2,6 @@
 
 
 void Ghosts::handleMovement(std::vector<sf::RectangleShape> wall) {
-    int count=0;
-    for(const auto&w:wall){
-        count++;
-    }
+    int n=static_cast<int>(wall.size());
+    std::cout<<n;
 }
