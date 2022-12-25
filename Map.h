@@ -8,12 +8,12 @@
 class Map {
     std::vector<sf::RectangleShape> wall;
     std::vector<sf::CircleShape> point,powerup;
-    sf::RectangleShape gate, border1,border2;
+    sf::RectangleShape gate, border1,border2,background;
     sf::Vector2f Size,Pac_pos,Size2,Start_Pos;
     std::vector<sf::Vector2f> Ghost_pos;
 //    int x=0;
 //    std::vector<sf::Sprite> bridge;
-    int sidebar;
+    float sidebar;
 public:
     Map()=default;
     Map(const int Map_Height,const int Screen_Height,const int Screen_Width,std::vector<std::string> map_sketch) {
@@ -22,6 +22,9 @@ public:
         Size2.x = Size.x;
         Size2.y = Size.y / 3;
         sidebar = (Screen_Width - Size.x * map_sketch.size()) / 2;
+        background.setFillColor(sf::Color::Black);
+        background.setPosition(sf::Vector2f(sidebar,0));
+        background.setSize(sf::Vector2f(Size.x*map_sketch.size(),Screen_Height));
         //border1.setPosition();
         //border2.setPosition();
         int n = static_cast<int>(map_sketch.size());
@@ -61,7 +64,7 @@ public:
                         gate.setTexture(&Resources::bridge);
                         break;
                     default:
-                        if (map_sketch[j][i] >= 0 && map_sketch[i][j] <= 9) {
+                        if (map_sketch[j][i] != ' ') {
                             Ghost_pos.emplace_back(sf::Vector2f());
                             Ghost_pos.back() = sf::Vector2f(sidebar + i * Size.x, j * Size.y);
                         }
@@ -76,6 +79,9 @@ public:
         Size2.x = Size.x;
         Size2.y = Size.y / 3;
         sidebar = (Screen_Width - Size.x * map_sketch.size()) / 2;
+        background.setFillColor(sf::Color::Black);
+        background.setPosition(sf::Vector2f(sidebar,0));
+        background.setSize(sf::Vector2f(Size.x*map_sketch.size(),Screen_Height));
         int n = static_cast<int>(map_sketch.size());
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < n; j++) {
@@ -113,7 +119,7 @@ public:
                         gate.setTexture(&Resources::bridge);
                         break;
                     default:
-                        if (map_sketch[j][i] >= 0 && map_sketch[i][j] <= 9) {
+                        if (map_sketch[j][i] != ' ') {
                             Ghost_pos.emplace_back(sf::Vector2f());
                             Ghost_pos.back() = sf::Vector2f(sidebar + i * Size.x, j * Size.y);
                         }
@@ -134,10 +140,11 @@ public:
     std::vector<sf::CircleShape>& getPowerup(){
         return powerup;
     }
-    [[maybe_unused]] sf::Vector2f getGhost_pos(int i){
-        return Ghost_pos[i];
+    std::vector<sf::Vector2f> getGhost_pos(){
+        return Ghost_pos;
     }
     void drawTo(sf::RenderWindow &window) {
+        window.draw(background);
         for(const auto& w:wall)
             window.draw(w);
         for(const auto& p:point)

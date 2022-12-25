@@ -10,7 +10,7 @@ Player::~Player() {
     std::cout << "Am apelat destructorul \n";
 }
 
-Player::Player(const Player &other) : name(other.name), bestScore(other.bestScore), timePlayed(other.timePlayed) {}
+Player::Player(const Player &other) : name{other.name}, bestScore{other.bestScore}, timePlayed{other.timePlayed}, enc_name{other.enc_name}{}
 
 [[maybe_unused]] void Player::setBestScore(int score) {
     this->bestScore = score;
@@ -48,4 +48,5 @@ std::string Player::getName() const {
 time_t Player::getTime() const {
     return timePlayed;
 }
+
 

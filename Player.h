@@ -5,7 +5,7 @@
 #include<iostream>
 #include<vector>
 #include <cctype>
-#include<string.h>
+#include<cstring>
 class Player {
 private:
     std::string name;
@@ -35,8 +35,14 @@ public:
     time_t getTime() const;
 
 
+    Player& operator = (Player other) {
+        std::swap(this->name, other.name);
+        std::swap(this->enc_name, other.enc_name);
+        std::swap(this->bestScore,other.bestScore);
+        std::swap(this->timePlayed,other.timePlayed);
+        return *this;
+    }
 
-    Player &operator=(const Player &other) = default;
 
 };
 

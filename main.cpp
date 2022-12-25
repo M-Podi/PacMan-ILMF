@@ -2,7 +2,7 @@
 
 int main() {
 
-    Menu menu;
+    auto &menu = Menu::get_menu();
 
     while(menu.getWindow().isOpen()){
         menu.update();
@@ -10,12 +10,16 @@ int main() {
     }
     return 0;
 }
+
+
+
 //#include<iostream>
 //#include "SFML/Graphics.hpp"
 //#include "Entity.h"
 //#include "Map.h"
 //#include "Pacman.h"
 //#include "Player.h"
+//#include "Ghosts.h"
 //std::vector<std::string> map_sketch = {
 //        " ################### ",
 //        " #........#........# ",
@@ -42,16 +46,25 @@ int main() {
 //int main() {
 //    sf::RenderWindow window(sf::VideoMode::getDesktopMode(), "Pac-Man ILMF",sf::Style::Fullscreen);
 //    window.setVerticalSyncEnabled(true);
-//    //Pacman pacman(window.getSize().y/map_sketch.size(),window.getSize().y/map_sketch.size());
 //    Map map(map_sketch.size(),window.getSize().y,window.getSize().x,map_sketch);
-//    //map.Innit(map_sketch.size(),window.getSize().y,window.getSize().x,map_sketch);
 //    sf::Clock clock;
-////    sf::Vector2f pacpos=sf::Vector2f(map.getPac_pos());
-//    //pacman.setPosition(sf::Vector2f(424,510));
-//    //pacman.setPosition(sf::Vector2f(475, 459));
 //    std::vector<std::shared_ptr<Entity>> entities;
 //    entities.push_back(std::make_shared<Pacman>(window.getSize().y/map_sketch.size(),window.getSize().y/map_sketch.size()));
 //    entities.back()->setPosition(map.getPac_pos());
+//    std::vector<sf::Texture> colors;
+//    colors.push_back(sf::Texture());
+//    colors.back()=Resources::BlueG;
+//    colors.push_back(sf::Texture());
+//    colors.back()=Resources::RedG;
+//    colors.push_back(sf::Texture());
+//    colors.back()=Resources::OrangeG;
+//    colors.push_back(sf::Texture());
+//    colors.back()=Resources::PinkG;
+//    std::vector<sf::Vector2f> GhostPos=map.getGhost_pos();
+//    for(int i=0;i<GhostPos.size();i++){
+//        entities.push_back(std::make_shared<Ghosts>(window.getSize().y/map_sketch.size(),window.getSize().y/map_sketch.size(),colors[i]));
+//        entities.back()->setPosition(GhostPos[i]);
+//    }
 //    sf::Event ev;
 //
 //    Player player("aa");
@@ -74,6 +87,5 @@ int main() {
 //        }
 //
 //        window.display();
-//        std::cout<<map.getPoints().size()<<"\n";
 //    }
 //}

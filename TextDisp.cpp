@@ -2,8 +2,8 @@
 
 TextDisp::TextDisp()=default;
 TextDisp::~TextDisp()=default;
-TextDisp::TextDisp(const std::string &popupText, int charSize, sf::Color textColor,sf::Font &fonts): txt(popupText){
-    text.setString(txt);
+TextDisp::TextDisp(const std::string &popupText, int charSize, sf::Color textColor,sf::Font &fonts){
+    text.setString(popupText);
     text.setOutlineColor(sf::Color::White);
     text.setOutlineThickness(5);
     text.setCharacterSize(charSize);
@@ -12,11 +12,10 @@ TextDisp::TextDisp(const std::string &popupText, int charSize, sf::Color textCol
     text.setFont(fonts);
 }
 std::string TextDisp::getText() const{
-    return txt;
+    return text.getString();
 }
 void TextDisp::setText(const std::string &other){
-    txt=other;
-    text.setString(txt);
+    text.setString(other);
 }
 [[maybe_unused]] void TextDisp::setCharSize(int c) {
     text.setCharacterSize(c);

@@ -3,6 +3,8 @@
 //
 
 #include "Pacman.h"
+
+
 void Pacman::handleMovement(std::vector<sf::RectangleShape> wall) {
 
     if (currentDirection != NONE) return;
@@ -28,6 +30,7 @@ void Pacman::handleMovement(std::vector<sf::RectangleShape> wall) {
             previousDirection=NONE;
         }
         else
+            //currentDirection=NONE;
             currentDirection=previousDirection;
     }
     else if(currentDirection!=NONE){

@@ -18,6 +18,8 @@ namespace Resources {
     extern sf::Texture Pac;
     extern sf::Texture wall;
     extern sf::Texture bridge;
+    extern sf::Texture BlueG,RedG,PinkG,OrangeG;
+    extern std::vector<sf::Texture> colors;
 }
 
 

@@ -9,12 +9,13 @@
 #include "Button.h"
 #include "Textbox.h"
 #include "Animation.h"
-#include "Entity.h"
 #include "Resources.h"
 #include "TextDisp.h"
 #include "Popup.h"
 #include "Player.h"
 #include "Map.h"
+#include "Pacman.h"
+#include "Ghosts.h"
 
 namespace displaying
 {
@@ -32,7 +33,6 @@ namespace displaying
 
 class Menu {
 private:
-
     std::vector<std::string> map_sketch = {
             " ################### ",
             " #........#........# ",
@@ -72,19 +72,22 @@ private:
                              sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont};
     displaying::options scenario=displaying::MENU;
     Textbox textbox1{30,sf::Color::Yellow,true,Resources::defaultFont};
-    //Entity Pac{static_cast<float>(window.getSize().y) / 21, static_cast<float>(window.getSize().y) / 21};
 
-    Player player2;
+    Player player;
     sf::Music music, music2, music3, music5;
     std::string soundL;
     TextDisp soundlevel{soundL,45,sf::Color(130,0,2,255),Resources::defaultFont},score{"0",45,sf::Color(130,0,2,255),Resources::defaultFont};
     Map map;
     int Scor=0,normalPoints,PowerPoints;
-
-public:
+    std::vector<std::shared_ptr<Entity>> entities;
+    std::vector<sf::Texture> colors;
+    std::vector<sf::Vector2f> GhostPos;
     Menu(){
+//        if(window.getSize().y>window.getSize().x){
+//            throw ResolutionUnsupported("Your current screen resolution is not supported");
+//        }
         window.setVerticalSyncEnabled(true);
-        animatedBackground.setSize(sf::Vector2f(1920,1080));
+        animatedBackground.setSize(sf::Vector2f(static_cast<float>(window.getSize().x),static_cast<float>(window.getSize().y)));
         animatedBackground.setPosition(0,0);
         animatedBackground.setTexture(&Resources::animatedBackground);
         btn1.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x)/ 8 * 6, static_cast<float>(window.getSize().y) * 55 / 100));
@@ -120,10 +123,24 @@ public:
         }
         soundL=std::to_string(static_cast<int>(music.getVolume()+0.1));
         soundL.resize(1);
-        soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9));
         music.play();
+        soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9));
+        colors.emplace_back(sf::Texture());
+        colors.back()=Resources::BlueG;
+        colors.emplace_back(sf::Texture());
+        colors.back()=Resources::RedG;
+        colors.emplace_back(sf::Texture());
+        colors.back()=Resources::OrangeG;
+        colors.emplace_back(sf::Texture());
+        colors.back()=Resources::PinkG;
     };
-    ~Menu() { window.close(); };
+public:
+    Menu(const Menu&) = delete;
+    Menu& operator=(const Menu&) = delete;
+    static Menu& get_menu() {
+        static Menu menu;
+        return menu;
+    }
 
     void update(){
         const float deltaTime=clock.restart().asSeconds();
@@ -155,31 +172,38 @@ public:
                 case sf::Event::MouseButtonPressed:
                     if (go.isMouseOver(window) && scenario == displaying::PLAY) {
                         std::string name = textbox1.getText();
-                        //try{
-                        player2=Player(name);
-                        if (player2.getEnc() == 4201227126) {
-                            music.pause();
-                            music2.play();
+                        try{
+                            player=Player(name);
+                            if (player.getEnc() == 4201227126) {
+                                music.pause();
+                                music2.play();
+                            }
+                            if (player.getEnc() == 4200760982) {
+                                music.pause();
+                                music3.play();
+                            }
+                            if (player.getEnc() == 4195453816) {
+                                music.pause();
+                            }
+                            if (player.getEnc() == 4193874688) {
+                                music.pause();
+                                music5.play();
+                            }
+                            map.Innit(static_cast<int>(map_sketch.size()),static_cast<int>(window.getSize().y),static_cast<int>(window.getSize().x),map_sketch);
+                            entities.push_back(std::make_shared<Pacman>(window.getSize().y/map_sketch.size(),window.getSize().y/map_sketch.size()));
+                            entities.back()->setPosition(map.getPac_pos());
+                            GhostPos=map.getGhost_pos();
+                            for(int i=0;i<GhostPos.size();i++){
+                                entities.push_back(std::make_shared<Ghosts>(window.getSize().y/map_sketch.size(),window.getSize().y/map_sketch.size(),colors[i]));
+                                entities.back()->setPosition(GhostPos[i]);
+                            }
+                            normalPoints=static_cast<int>(map.getPoints().size());
+                            PowerPoints=static_cast<int>(map.getPowerup().size());
+                            scenario = displaying::GAME;
                         }
-                        if (player2.getEnc() == 4200760982) {
-                            music.pause();
-                            music3.play();
-                            std::cout << music3.getVolume();
+                        catch(InvalidNameError &){
+                            std::cout<<"You need to enter a valid username before starting the game\n";
                         }
-                        if (player2.getEnc() == 4195453816) {
-                            music.pause();
-                        }
-                        if (player2.getEnc() == 4193874688) {
-                            music.pause();
-                            music5.play();
-                        }
-                        map.Innit(map_sketch.size(),window.getSize().y,window.getSize().x,map_sketch);
-                        //Pac.setPosition(map.getPac_pos());
-                        normalPoints=map.getPoints().size();
-                        PowerPoints=map.getPowerup().size();
-                        scenario = displaying::GAME;
-                        //}
-                        //catch(InvalidNameError){}
                     }
                     if (opt1.isMouseOver(window) && scenario == displaying::QUIT) {
                         window.close();
@@ -247,11 +271,27 @@ public:
         score.setText(std::to_string(Scor));
         score.setPosition(sf::Vector2f(0,0));
         if(scenario==displaying::GAME){
-//            Pac.handleInput(map.getWalls());
-//            Pac.move(map.getPoints(),map.getPowerup(),map_sketch,window.getSize().x);
-//            Pac.update2(deltaTime);
+            sf::Vector2f Pos;
+            for(const auto&entity:entities){
+                entity->handleMovement(map.getWalls());
+                entity->move(map.getPoints(),map.getPowerup(),map_sketch,window.getSize().x);
+                entity->update2(deltaTime);
+                if(std::dynamic_pointer_cast<Pacman>(entity))
+                    Pos=entity->GetPosition();
+            }
+            if(Lost(entities,Pos))
+                scenario=displaying::LOST;
+            if(map.getPoints().empty()&&map.getPowerup().empty())
+                scenario=displaying::WON;
         }
     };
+    static bool Lost(const std::vector<std::shared_ptr<Entity>> &entitiess,sf::Vector2f Pos){
+        for(const auto&entity:entitiess) {
+            if(std::dynamic_pointer_cast<Ghosts>(entity)&&entity->GetGlobalBounds().contains(Pos))
+                return true;
+        }
+        return false;
+    }
     void render() {
         this->window.clear();
         this->window.draw(animatedBackground);
@@ -280,12 +320,21 @@ public:
                 break;
             case displaying::GAME:
                 map.drawTo(window);
-                //Pac.drawTo(window);
+                for(const auto&entity:entities){
+                    entity->drawTo(window);
+                }
                 score.draw(window);
                 break;
             case displaying::WON:
+                map.drawTo(window);
+                for(const auto&entity:entities){
+                    entity->drawTo(window);
+                }
+                score.draw(window);
+                std::cout<<"Ai castigat\n";
                 break;
             case displaying::LOST:
+                std::cout<<"Ai pierdut\n";
                 break;
             default:
                 break;

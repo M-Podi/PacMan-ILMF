@@ -1,17 +1,21 @@
 #include "Entity.h"
 
 Entity::Entity() =default;
-Entity::Entity(float x, float y) {
+Entity::Entity(float x, float y,sf::Texture &texture,int frames) {
     rect.setSize(sf::Vector2f(x, y));
     rect.setSize(sf::Vector2f(x, y));
     rect.setRotation(0.f);
-    animation2.Innit(&Resources::Pac,sf::Vector2u(4,1),0.1f);
+    animation2.Innit(&texture,sf::Vector2u(frames,1),0.1f);
     rect.setSize(sf::Vector2f(x, y));
-    rect.setFillColor(sf::Color::Yellow);
-    rect.setTexture(&Resources::Pac);
+    rect.setTexture(&texture);
     rect.setOrigin(rect.getGlobalBounds().getSize()/2.f);
 }
-
+sf::Vector2f Entity::GetPosition() {
+    return rect.getPosition();
+}
+sf::Rect<float> Entity::GetGlobalBounds(){
+    return rect.getGlobalBounds();
+}
 void Entity::setPosition(sf::Vector2f Pos){
     rect.setPosition(Pos+rect.getSize()/2.f);
 }

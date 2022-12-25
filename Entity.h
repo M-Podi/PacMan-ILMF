@@ -21,18 +21,20 @@ namespace directions
 class Entity {
 public:
     Entity();
-    Entity(float x, float y);
-    void Innit(float x, float y);
+    Entity(float x, float y,sf::Texture &texture,int frames);
     void setPosition(sf::Vector2f Pos);
     void drawTo(sf::RenderWindow &window);
     virtual void handleMovement(std::vector<sf::RectangleShape> wall)=0;
     bool canMove(const sf::Vector2<float>& move,const std::vector<sf::RectangleShape> &wall);
     void move(std::vector<sf::CircleShape>& point,std::vector<sf::CircleShape>& powerup,std::vector<std::string> map_sketch,int screenSize);
     void update2(float deltaTime);
+    sf::Rect<float> GetGlobalBounds();
+    sf::Vector2f GetPosition();
+    virtual Entity* clone() const = 0;
 protected:
     Animation animation2;
     sf::RectangleShape rect;
-    sf::Vector2f prevpos;
+    //sf::Vector2f prevpos;
     const sf::Vector2f directions[5] = {
             {-1, 0},
             {0, -1},

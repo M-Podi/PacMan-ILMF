@@ -20,8 +20,8 @@ public:
     void setPosition(sf::Vector2f square);
     [[maybe_unused]] void setTextColor(sf::Color textColor);
 
-    //virtual void draw(sf::RenderWindow &window);
     virtual void draw(sf::RenderWindow &window);
+
 };
 
 

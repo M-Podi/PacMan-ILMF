@@ -5,12 +5,14 @@
 #ifndef OOP_PACMAN_H
 #define OOP_PACMAN_H
 #include "Entity.h"
-
+#include "Ghosts.h"
 class Pacman:public Entity {
 public:
     Pacman()=default;
-    Pacman(float x, float y):Entity(x,y){};
+    Pacman(float x, float y):Entity(x,y,Resources::Pac,4){};
     void handleMovement(std::vector<sf::RectangleShape> wall) override;
+
+    Entity* clone() const override { return new Pacman(*this); }
 };
 
 
