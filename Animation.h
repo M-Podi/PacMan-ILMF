@@ -19,8 +19,8 @@ private:
     sf::IntRect uvRect;
     sf::Vector2u imageCount;
     sf::Vector2u currentImage;
-    float totalTime;
-    float switchTime;
+    float totalTime=0;
+    float switchTime=0;
 };
 
 

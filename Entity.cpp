@@ -32,7 +32,7 @@ void Entity::update2(float deltaTime){
     animation2.Update(0,deltaTime);
     this->rect.setTextureRect(animation2.getuvRect());
 }
-void Entity::move(std::vector<sf::CircleShape>& point,std::vector<sf::CircleShape>& powerup,std::vector<std::string> map_sketch,int screenSize) {
+void Entity::move(std::vector<sf::CircleShape>& point,std::vector<sf::CircleShape>& powerup,const std::vector<std::string> &map_sketch,int screenSize) {
     for (int i = 0; i < static_cast<int>(point.size()); i++) {
         if(point[i].getGlobalBounds().contains(rect.getPosition())) {
             point.erase(point.begin() + i);

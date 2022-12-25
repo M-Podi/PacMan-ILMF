@@ -8,10 +8,10 @@
 #include<cstring>
 class Player {
 private:
-    std::string name;
-    uint32_t enc_name;
-    int bestScore;
-    time_t timePlayed;
+    std::string name=" ";
+    uint32_t enc_name=0;
+    int bestScore=0;
+    time_t timePlayed=0;
 public:
     Player()=default;
     explicit Player(const std::string &name, int score = 0, time_t time = 0);

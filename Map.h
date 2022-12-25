@@ -13,7 +13,7 @@ class Map {
     std::vector<sf::Vector2f> Ghost_pos;
 //    int x=0;
 //    std::vector<sf::Sprite> bridge;
-    float sidebar;
+    float sidebar=0;
 public:
     Map()=default;
     Map(const int Map_Height,const int Screen_Height,const int Screen_Width,std::vector<std::string> map_sketch) {

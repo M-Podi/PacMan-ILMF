@@ -4,6 +4,15 @@
 Player::Player(const std::string &name, int scor, time_t time) : name(name), bestScore(scor), timePlayed(time) {
     if(name.empty())
         throw InvalidNameError("Name cannot be empty");
+    const uint32_t Polynomial = 0x04C11DB7;
+    uint32_t crc = ~0u;
+    for(const char &it:name)
+    {
+        crc ^= std::tolower(it);
+        for (unsigned int j = 0; j < 8; j++)
+            crc = (crc >> 1) ^ (-int(crc & 1) & Polynomial);
+    }
+    enc_name=~crc;
 }
 
 Player::~Player() {

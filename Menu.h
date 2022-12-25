@@ -79,7 +79,7 @@ private:
     std::string soundL;
     TextDisp soundlevel{soundL,45,sf::Color(130,0,2,255),Resources::defaultFont},score{"0",45,sf::Color(130,0,2,255),Resources::defaultFont};
     Map map;
-    int Scor=0,normalPoints,PowerPoints;
+    int Scor=0,normalPoints=0,PowerPoints=0;
     std::vector<std::shared_ptr<Entity>> entities;
     std::vector<sf::Texture> colors;
     std::vector<sf::Vector2f> GhostPos;
