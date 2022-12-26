@@ -10,14 +10,12 @@ Player::Player(const std::string &name, int scor, time_t time) : name(name), bes
     {
         crc ^= std::tolower(it);
         for (unsigned int j = 0; j < 8; j++)
-            crc = (crc >> 1) ^ (-(int32_t(crc & 1) & Polynomial));
+            crc = (crc >> 1) ^ (-int(crc & 1) & Polynomial);
     }
     enc_name=~crc;
 }
 
-Player::~Player() {
-    std::cout << "Am apelat destructorul \n";
-}
+
 
 Player::Player(const Player &other) : name(other.name), enc_name(other.enc_name), bestScore(other.bestScore), timePlayed(other.timePlayed){}
 

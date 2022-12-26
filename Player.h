@@ -18,7 +18,7 @@ public:
 
     Player(const Player &player);
 
-    ~Player();
+    ~Player()=default;
 
 
     //void setName(const std::string &name);
