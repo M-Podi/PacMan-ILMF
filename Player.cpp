@@ -10,7 +10,7 @@ Player::Player(const std::string &name, int scor, time_t time) : name(name), bes
     {
         crc ^= std::tolower(it);
         for (unsigned int j = 0; j < 8; j++)
-            crc = (crc >> 1) ^ (-static_cast<int>(crc & 1) & Polynomial);
+            crc = (crc >> 1) ^ (-(static_cast<int>(crc & 1)) & Polynomial);
     }
     enc_name=~crc;
 }
