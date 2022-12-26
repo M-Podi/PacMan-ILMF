@@ -91,18 +91,15 @@ void Menu::update(){
                     std::string name = textbox1.getText();
                     try{
                         player=Player(name);
-                        if (player.getEnc() == 4201227126) {
+                        if (player.getEnc() == 4086380254) {
                             music.pause();
                             music2.play();
                         }
-                        if (player.getEnc() == 4200760982) {
+                        if (player.getEnc() == 885026756) {
                             music.pause();
                             music3.play();
                         }
-                        if (player.getEnc() == 4195453816) {
-                            music.pause();
-                        }
-                        if (player.getEnc() == 4193874688) {
+                        if (player.getEnc() == 3139621729) {
                             music.pause();
                             music5.play();
                         }
