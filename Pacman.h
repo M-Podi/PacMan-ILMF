@@ -6,6 +6,7 @@
 #define OOP_PACMAN_H
 #include "Entity.h"
 #include "Ghosts.h"
+
 class Pacman:public Entity {
 public:
     Pacman()=default;
