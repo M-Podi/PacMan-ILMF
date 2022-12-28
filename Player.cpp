@@ -13,7 +13,7 @@ Player::Player(std::string &name, int scor, time_t time) : name(name), bestScore
     unsigned char* current =const_cast<unsigned char *>(reinterpret_cast<const unsigned char *>(name.c_str()));
     //unsigned char* current = reinterpret_cast<unsigned char *>(name.c_str());
     //strcpy(current,static_cast<unsigned char *>(name.c_str()));
-    int s = strlen((char*)current);
+    int s = strlen(reinterpret_cast<char *>(current));
     while (s--)
     {
         crc ^= *current++;
