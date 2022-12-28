@@ -8,12 +8,12 @@ Player::Player(std::string &name, int scor, time_t time) : name(name), bestScore
     uint32_t previousCrc32 = 0;
     const uint32_t Polynomial = 0xEDB88320;
     uint32_t crc = ~previousCrc32;
-    //unsigned char* current = (unsigned char *)name.c_str();;
-    //const_cast<Dialog*>(reinterpret_cast<const Dialog *>(data));
-    unsigned char* current =const_cast<unsigned char *>(reinterpret_cast<const unsigned char *>(name.c_str()));
-    //unsigned char* current = reinterpret_cast<unsigned char *>(name.c_str());
-    //strcpy(current,static_cast<unsigned char *>(name.c_str()));
-    int s = strlen(reinterpret_cast<char *>(current));
+
+    //unsigned char* current =const_cast<unsigned char *>(reinterpret_cast<const unsigned char *>(name.c_str()));
+
+    auto current = name.c_str();
+
+    auto s = name.size();
     while (s--)
     {
         crc ^= *current++;
