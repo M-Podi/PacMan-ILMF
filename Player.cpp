@@ -1,15 +1,18 @@
 #include "Player.h"
 
 
-Player::Player(const std::string &name, int scor, time_t time) : name(name), bestScore(scor), timePlayed(time) {
+Player::Player(std::string &name, int scor, time_t time) : name(name), bestScore(scor), timePlayed(time) {
     if(name.empty())
         throw InvalidNameError("Name cannot be empty");
 
     uint32_t previousCrc32 = 0;
     const uint32_t Polynomial = 0xEDB88320;
     uint32_t crc = ~previousCrc32;
-    unsigned char* current = (unsigned char *)name.c_str();;
-
+    //unsigned char* current = (unsigned char *)name.c_str();;
+    //const_cast<Dialog*>(reinterpret_cast<const Dialog *>(data));
+    unsigned char* current =const_cast<unsigned char *>(reinterpret_cast<const unsigned char *>(name.c_str()));
+    //unsigned char* current = reinterpret_cast<unsigned char *>(name.c_str());
+    //strcpy(current,static_cast<unsigned char *>(name.c_str()));
     int s = strlen((char*)current);
     while (s--)
     {

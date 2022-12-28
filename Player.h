@@ -14,7 +14,7 @@ private:
     time_t timePlayed=0;
 public:
     Player()=default;
-    explicit Player(const std::string &name, int score = 0, time_t time = 0);
+    explicit Player(std::string &name, int score = 0, time_t time = 0);
 
     Player(const Player &player);
 
