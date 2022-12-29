@@ -60,9 +60,9 @@ void Entity::move(std::vector<sf::CircleShape>& point,std::vector<sf::CircleShap
     rect.setPosition(coords);
     int sidebar = (screenSize - rect.getSize().x * map_sketch.size()) / 2;
     if(rect.getPosition().x<sidebar)
-        rect.setPosition(sf::Vector2f(sidebar+map_sketch.size()*rect.getSize().x,rect.getPosition().y));
+        rect.setPosition(rect.getPosition()+sf::Vector2f(map_sketch.size()*rect.getSize().x,0));
     else if(rect.getPosition().x>sidebar+map_sketch.size()*rect.getSize().x)
-        rect.setPosition(sf::Vector2f(sidebar,rect.getPosition().y));
+        rect.setPosition(rect.getPosition()-sf::Vector2f(map_sketch.size()*rect.getSize().x,0));
 }
 
 
