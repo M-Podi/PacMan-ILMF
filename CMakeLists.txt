@@ -82,7 +82,7 @@ sfml_set_custom_stdlib(sfml-audio)
 
 # NOTE: update executable name in .github/workflows/cmake.yml when changing name here
 #add_executable(${PROJECT_NAME} main.cpp Button.cpp Button.h Player.cpp Player.h Textbox.cpp Textbox.h Animation.cpp Animation.h Entity.cpp Entity.h Resources.cpp Resources.h TextDisp.cpp TextDisp.h Popup.cpp Popup.h Map.cpp Map.h ConvertSketch.cpp Headers/ConvertSketch.hpp DrawMap.cpp Headers/DrawMap.hpp DrawText.cpp Headers/DrawText.hpp Ghost.cpp Headers/Ghost.hpp GhostManager.cpp Headers/GhostManager.hpp Headers/Global.hpp MapCollision.cpp Headers/MapCollision.hpp Pacman.cpp Headers/Pacman.hpp)
-add_executable(${PROJECT_NAME} main.cpp Button.cpp Button.h Player.cpp Player.h Textbox.cpp Textbox.h Animation.cpp Animation.h Entity.cpp Entity.h Resources.cpp Resources.h TextDisp.cpp TextDisp.h Popup.cpp Popup.h Map.cpp Map.h Pacman.cpp Pacman.h Exceptions.h Ghosts.cpp Ghosts.h Menu.cpp Menu.h)
+add_executable(${PROJECT_NAME} main.cpp Button.cpp Button.h Player.cpp Player.h Textbox.cpp Textbox.h Animation.cpp Animation.h Entity.cpp Entity.h Resources.cpp Resources.h TextDisp.cpp TextDisp.h Popup.cpp Popup.h Map.cpp Map.h Pacman.cpp Pacman.h Exceptions.h Ghosts.cpp Ghosts.h Menu.cpp Menu.h PopupFactory.cpp PopupFactory.h)
 ###############################################################################
 
 # target definitions

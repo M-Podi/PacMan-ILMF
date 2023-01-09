@@ -2,7 +2,6 @@
 Textbox::Textbox()=default;
 Textbox::Textbox(int size,sf::Color color, bool sel,sf::Font &fonts){
     setCharacterSize(size);
-    limit=60;
     setColor(color);
     isSelected=sel;
     textbox.setCharacterSize(size);

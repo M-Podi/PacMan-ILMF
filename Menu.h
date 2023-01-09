@@ -17,6 +17,8 @@
 #include "Map.h"
 #include "Pacman.h"
 #include "Ghosts.h"
+#include "PopupFactory.h"
+
 
 namespace displaying
 {
@@ -62,15 +64,12 @@ private:
     sf::RectangleShape animatedBackground;
     sf::Clock clock;
     Animation animation1{&Resources::animatedBackground,sf::Vector2u(8,1),0.15f};
-    Button btn1{"Play", 77,Resources::defaultFont},btn2{"Settings", 77,Resources::defaultFont},btn3{"Quit", 77,Resources::defaultFont},\
-    opt1{"Yes", 77,Resources::defaultFont},opt2{"No", 77, Resources::defaultFont},done{"Done", 77,Resources::defaultFont},\
-    go{"Go", 77,Resources::defaultFont},VolumeDown{"-", 77,Resources::defaultFont},VolumeUp{"+", 77,Resources::defaultFont};
-    Popup quit{"  Are you sure you\n  want to quit?", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 50,
-               sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont},\
-    settings{"  Audio Level", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 55,
-             sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont},\
-                        play{"  Enter your username:", sf::Vector2f(static_cast<float>(window.getSize().x) / 3, static_cast<float>(window.getSize().y) / 3), 55,
-                             sf::Color(130,0,2,255),Resources::popupWindow,Resources::defaultFont};
+    Button btn1{"Play", 77,Resources::defaultFont}, btn2{"Settings", 77,Resources::defaultFont}, btn3{"Quit", 77,Resources::defaultFont},\
+    opt1{"Yes", 77,Resources::defaultFont}, opt2{"No", 77, Resources::defaultFont},done{"Done", 77,Resources::defaultFont},\
+    go{"Go", 77,Resources::defaultFont},VolumeDown{"-", 77,Resources::defaultFont}, VolumeUp{"+", 77,Resources::defaultFont};
+    Popup quit=PopupFactory::simplePopup("  Are you sure you\n  want to quit?",window);
+    Popup settings=PopupFactory::simplePopup("  Audio Level",window);
+    Popup play=PopupFactory::simplePopup("  Enter your username:",window);
     displaying::options scenario=displaying::MENU;
     Textbox textbox1{30,sf::Color::Yellow,true,Resources::defaultFont};
 

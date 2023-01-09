@@ -26,7 +26,7 @@ private:
     std::ostringstream text;
     bool isSelected = false;
     bool hasLimit = false;
-    unsigned long limit=0;
+    unsigned long limit=60;
     void inputLogic(int charTyped);
     void deleteLastChar();
 };

@@ -10,11 +10,11 @@ class Player {
 private:
     std::string name=" ";
     uint32_t enc_name=0;
-    int bestScore=0;
     time_t timePlayed=0;
+    std::vector<int> pastScores;
 public:
     Player()=default;
-    explicit Player(std::string &name, int score = 0, time_t time = 0);
+    explicit Player(std::string &name, time_t time = 0);
 
     Player(const Player &player);
 
@@ -33,13 +33,16 @@ public:
 
 
     Player& operator = (Player other) {
-        std::swap(this->name, other.name);
-        std::swap(this->enc_name, other.enc_name);
-        std::swap(this->bestScore,other.bestScore);
-        std::swap(this->timePlayed,other.timePlayed);
+        swap(*this,other);
         return *this;
     }
-
+    friend void swap(Player &first,Player &second){
+        using std::swap;
+        swap(first.name,second.name);
+        swap(first.pastScores,second.pastScores);
+        swap(first.enc_name,second.enc_name);
+        swap(first.timePlayed,second.timePlayed);
+    }
 
 };
 
