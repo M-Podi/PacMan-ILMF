@@ -12,7 +12,6 @@ private:
     uint32_t enc_name=0;
     std::vector<int> pastScores;
     time_t timePlayed=0;
-
 public:
     Player()=default;
     explicit Player(std::string &name, time_t time = 0);
