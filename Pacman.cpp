@@ -5,7 +5,7 @@
 #include "Pacman.h"
 
 
-void Pacman::handleMovement(const std::vector<sf::RectangleShape> &wall) {
+void Pacman::handleMovement(const std::vector<std::string> map_sketch,sf::Vector2f relPos) {
 
     if (currentDirection != NONE) return;
     remaining = rect.getSize().x;
@@ -22,8 +22,8 @@ void Pacman::handleMovement(const std::vector<sf::RectangleShape> &wall) {
         currentDirection = previousDirection;
     }
 
-    const auto next = rect.getPosition() + directions[currentDirection] * rect.getSize().x;
-    if (!canMove(next,wall)) {
+    const auto next = relPos + directions[currentDirection];
+    if (canMove(next,map_sketch)) {
         if(currentDirection==previousDirection||previousDirection==NONE){
             currentDirection=NONE;
             remaining = 0;

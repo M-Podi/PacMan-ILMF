@@ -21,12 +21,8 @@ void Entity::setPosition(sf::Vector2f Pos){
 }
 
 
-bool Entity::canMove(const sf::Vector2<float>& move,const std::vector<sf::RectangleShape> &wall) {
-    for (const auto& w:wall) {
-        if(w.getGlobalBounds().contains(move))
-            return false;
-    }
-    return true;
+bool Entity::canMove(const sf::Vector2<float>& move,const std::vector<std::string> map_sketch) {
+    return map_sketch[move.y][move.x]=='#';
 }
 void Entity::update2(float deltaTime){
     animation2.Update(0,deltaTime);

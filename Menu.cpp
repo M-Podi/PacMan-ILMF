@@ -11,15 +11,15 @@ Menu::Menu(){
     animatedBackground.setSize(sf::Vector2f(static_cast<float>(window.getSize().x),static_cast<float>(window.getSize().y)));
     animatedBackground.setPosition(0,0);
     animatedBackground.setTexture(&Resources::animatedBackground);
-    btn1.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x)/ 8 * 6, static_cast<float>(window.getSize().y) * 55 / 100));
-    btn2.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 8 * 6, static_cast<float>(window.getSize().y) * 70 / 100));
-    btn3.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 8 * 6, static_cast<float>(window.getSize().y) * 85 / 100));
-    opt1.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 25 * 11, static_cast<float>(window.getSize().y) / 7 * 4));
-    opt2.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4));
-    done.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4));
-    go.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 7 * 4));
-    VolumeDown.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 26 * 11, static_cast<float>(window.getSize().y) / 100*47));
-    VolumeUp.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 100*47));
+    btn1.setPosition(sf::Vector2u(window.getSize().x/ 8 * 6, window.getSize().y * 55 / 100));
+    btn2.setPosition(sf::Vector2u(window.getSize().x / 8 * 6, window.getSize().y * 70 / 100));
+    btn3.setPosition(sf::Vector2u(window.getSize().x / 8 * 6, window.getSize().y * 85 / 100));
+    opt1.setPosition(sf::Vector2u(window.getSize().x / 25 * 11, window.getSize().y / 7 * 4));
+    opt2.setPosition(sf::Vector2u(window.getSize().x / 20 * 11, window.getSize().y / 7 * 4));
+    done.setPosition(sf::Vector2u(window.getSize().x / 20 * 11, window.getSize().y / 7 * 4));
+    go.setPosition(sf::Vector2u(window.getSize().x / 20 * 11, window.getSize().y / 7 * 4));
+    VolumeDown.setPosition(sf::Vector2u(static_cast<float>(window.getSize().x) / 26 * 11, static_cast<float>(window.getSize().y) / 100*47));
+    VolumeUp.setPosition(sf::Vector2u(static_cast<float>(window.getSize().x) / 20 * 11, static_cast<float>(window.getSize().y) / 100*47));
     play.setPosition(sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
                                   (static_cast<float>(window.getSize().y) - static_cast<float>(window.getSize().y) / 3) / 2),
                      sf::Vector2f((static_cast<float>(window.getSize().x) - static_cast<float>(window.getSize().x) / 3) / 2,
@@ -43,7 +43,7 @@ Menu::Menu(){
         it->setLoop(true);
     }
     soundL=std::to_string(static_cast<int>(music.getVolume()+0.1));
-    soundL.resize(1);
+    soundL.resize(2);
     music.play();
     soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9));
     colors.emplace_back(sf::Texture());
@@ -104,6 +104,7 @@ void Menu::update(){
                             music5.play();
                         }
                         map.Innit(static_cast<int>(map_sketch.size()),static_cast<int>(window.getSize().y),static_cast<int>(window.getSize().x),map_sketch);
+                        Sidebar = window.getSize().x-(window.getSize().y)/2;
                         entities.push_back(std::make_shared<Pacman>(window.getSize().y/map_sketch.size(),window.getSize().y/map_sketch.size()));
                         entities.back()->setPosition(map.getPac_pos());
                         GhostPos=map.getGhost_pos();
@@ -183,16 +184,21 @@ void Menu::update(){
     animatedBackground.setTextureRect(animation1.getuvRect());
     Scor=(normalPoints-map.getPoints().size())*10+(PowerPoints-map.getPowerup().size())*30;
     score.setText(std::to_string(Scor));
-    score.setPosition(sf::Vector2f(0,0));
     if(scenario==displaying::GAME){
-        sf::Vector2f Pos;
+        sf::Vector2f Pos,relPos;
+
         for(const auto&entity:entities){
-            entity->handleMovement(map.getWalls());
+            if(std::dynamic_pointer_cast<Pacman>(entity)) {
+                Pos = entity->GetPosition();
+                relPos.x=static_cast<int>(((Pos.x)/(window.getSize().y/map_sketch.size())))-8;
+                relPos.y=static_cast<int>(Pos.y/(window.getSize().y/map_sketch.size()));
+
+            }
+            entity->handleMovement(map_sketch,relPos);
             entity->move(map.getPoints(),map.getPowerup(),map_sketch,window.getSize().x);
             entity->update2(deltaTime);
-            if(std::dynamic_pointer_cast<Pacman>(entity))
-                Pos=entity->GetPosition();
         }
+
         if(Lost(entities,Pos))
             scenario=displaying::LOST;
         if(map.getPoints().empty()&&map.getPowerup().empty())

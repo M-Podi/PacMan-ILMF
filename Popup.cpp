@@ -1,11 +1,13 @@
 #include "Popup.h"
+
 Popup::Popup()=default;
+
 Popup::~Popup()=default;
+
 Popup::Popup(const std::string &popupText, sf::Vector2f popupSize, int charSize, sf::Color textColor,sf::Texture &texture,sf::Font &fonts) {
-    txt=popupText;
     popup.setSize(popupSize);
     popup.setTexture(&texture);
-    text.setString(txt);
+    text.setString(popupText);
     text.setOutlineColor(sf::Color::White);
     text.setOutlineThickness(5);
     text.setCharacterSize(charSize);
@@ -14,14 +16,17 @@ Popup::Popup(const std::string &popupText, sf::Vector2f popupSize, int charSize,
 }
 
 std::string Popup::getText() const {
-    return txt;
+    return text.getString();
 }
+
 [[maybe_unused]] void Popup::setCharSize(int c) {
     text.setCharacterSize(c);
 }
+
 void Popup::setFont(sf::Font &fonts) {
     text.setFont(fonts);
 }
+
 void Popup::setPosition(sf::Vector2f point, sf::Vector2f square) {
     popup.setPosition(point);
     Position = point;

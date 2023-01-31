@@ -64,9 +64,15 @@ private:
     sf::RectangleShape animatedBackground;
     sf::Clock clock;
     Animation animation1{&Resources::animatedBackground,sf::Vector2u(8,1),0.15f};
-    Button btn1{"Play", 77,Resources::defaultFont}, btn2{"Settings", 77,Resources::defaultFont}, btn3{"Quit", 77,Resources::defaultFont},\
-    opt1{"Yes", 77,Resources::defaultFont}, opt2{"No", 77, Resources::defaultFont},done{"Done", 77,Resources::defaultFont},\
-    go{"Go", 77,Resources::defaultFont},VolumeDown{"-", 77,Resources::defaultFont}, VolumeUp{"+", 77,Resources::defaultFont};
+    Button btn1{"Play", 77,Resources::defaultFont},\
+    btn2{"Settings", 77,Resources::defaultFont,},\
+    btn3{"Quit", 77,Resources::defaultFont},\
+    opt1{"Yes", 77,Resources::defaultFont},\
+    opt2{"No", 77, Resources::defaultFont},\
+    done{"Done", 77,Resources::defaultFont},\
+    go{"Go", 77,Resources::defaultFont},\
+    VolumeDown{"-", 77,Resources::defaultFont},\
+    VolumeUp{"+", 77,Resources::defaultFont};
     Popup quit=PopupFactory::simplePopup("  Are you sure you\n  want to quit?",window);
     Popup settings=PopupFactory::simplePopup("  Audio Level",window);
     Popup play=PopupFactory::simplePopup("  Enter your username:",window);
@@ -76,9 +82,11 @@ private:
     Player player;
     sf::Music music, music2, music3, music5;
     std::string soundL;
-    TextDisp soundlevel{soundL,45,sf::Color(130,0,2,255),Resources::defaultFont},score{"0",45,sf::Color(130,0,2,255),Resources::defaultFont};
+    TextDisp soundlevel{soundL,45,sf::Color(130,0,2,255),Resources::defaultFont,sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9)};
+    TextDisp score{"0",45,sf::Color(130,0,2,255),Resources::defaultFont,sf::Vector2f(0,0)};
     Map map;
     int Scor=0,normalPoints=0,PowerPoints=0;
+    float Sidebar=0;
     std::vector<std::shared_ptr<Entity>> entities;
     std::vector<sf::Texture> colors;
     std::vector<sf::Vector2f> GhostPos;
