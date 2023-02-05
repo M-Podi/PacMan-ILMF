@@ -82,8 +82,8 @@ private:
     Player player;
     sf::Music music, music2, music3, music5;
     std::string soundL;
-    TextDisp soundlevel{soundL,45,sf::Color(130,0,2,255),Resources::defaultFont,sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9)};
-    TextDisp score{"0",45,sf::Color(130,0,2,255),Resources::defaultFont,sf::Vector2f(0,0)};
+    TextDisp<float> soundlevel{soundL,45,sf::Color(130,0,2,255),Resources::defaultFont,static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9};
+    TextDisp<int> score{"0",45,sf::Color(130,0,2,255),Resources::defaultFont,0,0};
     Map map;
     int Scor=0,normalPoints=0,PowerPoints=0;
     float Sidebar=0;

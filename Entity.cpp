@@ -3,7 +3,6 @@
 Entity::Entity() =default;
 Entity::Entity(float x, float y,sf::Texture &texture,int frames) {
     rect.setSize(sf::Vector2f(x, y));
-    rect.setSize(sf::Vector2f(x, y));
     rect.setRotation(0.f);
     animation2.Innit(&texture,sf::Vector2u(frames,1),0.1f);
     rect.setSize(sf::Vector2f(x, y));
@@ -21,7 +20,7 @@ void Entity::setPosition(sf::Vector2f Pos){
 }
 
 
-bool Entity::canMove(const sf::Vector2<float>& move,const std::vector<std::string> map_sketch) {
+bool Entity::canMove(const sf::Vector2<float>& move,const std::vector<std::string> &map_sketch) {
     return map_sketch[move.y][move.x]=='#';
 }
 void Entity::update2(float deltaTime){

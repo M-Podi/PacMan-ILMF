@@ -45,7 +45,7 @@ Menu::Menu(){
     soundL=std::to_string(static_cast<int>(music.getVolume()+0.1));
     soundL.resize(2);
     music.play();
-    soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9));
+    soundlevel.setPosition(static_cast<float>(window.getSize().x) / 200*97, static_cast<float>(window.getSize().y) / 20 * 9);
     colors.emplace_back(sf::Texture());
     colors.back()=Resources::BlueG;
     colors.emplace_back(sf::Texture());
@@ -80,6 +80,9 @@ void Menu::update(){
                 break;
             case sf::Event::MouseMoved:
                 for (const auto &it: {&btn1, &btn2, &btn3, &opt1, &opt2, &done, &go, &VolumeDown, &VolumeUp}) {
+                    sf::Color color(2,2,2);
+
+
                     if (it->isMouseOver(window)) {
                         it->setTextColor(sf::Color(130, 0, 2, 255));
                     } else
@@ -145,8 +148,8 @@ void Menu::update(){
                         soundL = std::to_string(static_cast<int>(music.getVolume() + 0.1));
                         soundL.resize(2);
                     }
-                    soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 200 * 97,
-                                                        static_cast<float>(window.getSize().y) / 20 * 9));
+                    soundlevel.setPosition(static_cast<float>(window.getSize().x) / 200 * 97,
+                                                        static_cast<float>(window.getSize().y) / 20 * 9);
                     soundlevel.setText(soundL);
                 }
                 if (VolumeUp.isMouseOver(window) && scenario == displaying::SETTINGS) {
@@ -158,8 +161,8 @@ void Menu::update(){
                     soundL = std::to_string(static_cast<int>(music.getVolume() + 0.1));
                     soundL.resize(2);
                     if (100 - music.getVolume() < 5) {
-                        soundlevel.setPosition(sf::Vector2f(static_cast<float>(window.getSize().x) / 100 * 48,
-                                                            static_cast<float>(window.getSize().y) / 20 * 9));
+                        soundlevel.setPosition(static_cast<float>(window.getSize().x) / 100 * 48,
+                                                            static_cast<float>(window.getSize().y) / 20 * 9);
                         soundL = "100";
                     }
                     soundlevel.setText(soundL);
@@ -185,21 +188,20 @@ void Menu::update(){
     Scor=(normalPoints-map.getPoints().size())*10+(PowerPoints-map.getPowerup().size())*30;
     score.setText(std::to_string(Scor));
     if(scenario==displaying::GAME){
-        sf::Vector2f Pos,relPos;
+        sf::Vector2f Pos1,relPos1,Pos2,relPos2;
 
         for(const auto&entity:entities){
             if(std::dynamic_pointer_cast<Pacman>(entity)) {
-                Pos = entity->GetPosition();
-                relPos.x=static_cast<int>(((Pos.x)/(window.getSize().y/map_sketch.size())))-8;
-                relPos.y=static_cast<int>(Pos.y/(window.getSize().y/map_sketch.size()));
-
+                Pos1 = entity->GetPosition();
+                relPos1.x=static_cast<int>(((Pos1.x)/(window.getSize().y/map_sketch.size())))-8;
+                relPos1.y=static_cast<int>(Pos1.y/(window.getSize().y/map_sketch.size()));
             }
-            entity->handleMovement(map_sketch,relPos);
+            entity->handleMovement(map_sketch,relPos1);
             entity->move(map.getPoints(),map.getPowerup(),map_sketch,window.getSize().x);
             entity->update2(deltaTime);
         }
 
-        if(Lost(entities,Pos))
+        if(Lost(entities,Pos1))
             scenario=displaying::LOST;
         if(map.getPoints().empty()&&map.getPowerup().empty())
             scenario=displaying::WON;

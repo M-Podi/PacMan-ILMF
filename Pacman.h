@@ -11,7 +11,7 @@ class Pacman:public Entity {
 public:
     Pacman()=default;
     Pacman(float x, float y):Entity(x,y,Resources::Pac,4){};
-    void handleMovement(const std::vector<std::string> map_sketch,sf::Vector2f relPos) override;
+    void handleMovement(const std::vector<std::string> &map_sketch,sf::Vector2f relPos) override;
 
     Entity* clone() const override { return new Pacman(*this); }
 };
