@@ -30,9 +30,9 @@ std::string Button::getText() const{
 }
 
 
-[[maybe_unused]] void Button::setCharSize(int c) {
-    text.setCharacterSize(c);
-}
+//[[maybe_unused]] void Button::setCharSize(int c) {
+//    text.setCharacterSize(c);
+//}
 
 void Button::setPosition(sf::Vector2u square) {
     sf::Vector2f pos;

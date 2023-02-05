@@ -14,7 +14,7 @@ public:
     Button(const std::string &popupText, int charSize,sf::Font &fonts);
     bool isMouseOver(sf::RenderWindow &window) const;
     std::string getText() const;
-    [[maybe_unused]] void setCharSize(int c);
+    //[[maybe_unused]] void setCharSize(int c);
 
     void setTextColor(sf::Color textColor);
     void setPosition(sf::Vector2u point);
