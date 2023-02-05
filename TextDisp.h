@@ -11,7 +11,7 @@ protected:
 public:
     TextDisp()=default;
 
-    TextDisp(const std::string &Text, int charSize, sf::Color textColor,sf::Font &fonts, T x, T y){
+    TextDisp(const std::string &Text, int charSize, sf::Color textColor,sf::Font &fonts, T x, T y):x(x),y(y){
         text.setString(Text);
         text.setOutlineColor(sf::Color::White);
         text.setOutlineThickness(5);

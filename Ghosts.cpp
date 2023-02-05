@@ -37,7 +37,7 @@ void tracePath(cell cellDetails[][COL], Pair dest) {
         printf("-> (%d,%d) ", p.first, p.second);
     }
 }
-void aStarSearch(std::vector<std::string> map_sketch, Pair src, Pair dest) {
+void aStarSearch(const std::vector<std::string> &map_sketch, Pair src, Pair dest) {
 
     if (!isUnBlocked(map_sketch, src.first, src.second)) {
         printf("Source is blocked\n");
