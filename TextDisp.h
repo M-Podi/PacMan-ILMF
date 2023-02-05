@@ -32,9 +32,9 @@ public:
     [[maybe_unused]] void setCharSize(int c) {
         text.setCharacterSize(c);
     };
-    template <typename T>
-    void setPosition(T x, T y) {
-        text.setPosition(x,y);
+
+    void setPosition(T a, T b) {
+        text.setPosition(a,b);
     };
     [[maybe_unused]] void setTextColor(sf::Color textColor){
         text.setFillColor(textColor);
