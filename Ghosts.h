@@ -9,6 +9,8 @@
 #include <queue>
 #include <algorithm>
 #include <functional>
+#include <cstring>
+#include <cfloat>
 class Ghosts:public Entity {
 public:
     Ghosts()=default;
