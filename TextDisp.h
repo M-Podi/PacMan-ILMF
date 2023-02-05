@@ -9,7 +9,7 @@ protected:
     T x,y;
     std::string txt;
 public:
-    TextDisp()=default;
+//    TextDisp()=default;
 
     TextDisp(const std::string &Text, int charSize, sf::Color textColor,sf::Font &fonts, T x, T y):x(x),y(y){
         text.setString(Text);
