@@ -27,15 +27,15 @@ public:
     void drawTo(sf::RenderWindow &window);
     virtual void handleMovement(const std::vector<std::string> &map_sketch,sf::Vector2f relPos)=0;
     static bool canMove(const sf::Vector2<float>& move,const std::vector<std::string> &map_sketch);
-    void move(std::vector<sf::CircleShape>& point,std::vector<sf::CircleShape>& powerup,const std::vector<std::string> &map_sketch,int screenSize);
+    void move(const std::vector<std::string> &map_sketch,int screenSize);
     void update2(float deltaTime);
     sf::Rect<float> GetGlobalBounds();
     sf::Vector2f GetPosition();
     virtual Entity* clone() const = 0;
+    //virtual void setScared(bool Scared) {return; };
 protected:
     Animation animation2;
     sf::RectangleShape rect;
-    //sf::Vector2f prevpos;
     const sf::Vector2f directions[5] = {
             {-1, 0},
             {0, -1},

@@ -22,8 +22,7 @@ double calculateHValue(int row, int col, Pair dest) {
     return (double)abs(row - dest.first) + abs(col - dest.second);
 }
 
-void tracePath(cell cellDetails[][COL], Pair dest) {
-    printf("\nThe Path is ");
+std::pair<int, int> tracePath(cell cellDetails[][COL], Pair dest) {
     int row = dest.first, col = dest.second;
     std::stack<Pair> Path;
     while (row != cellDetails[row][col].parent_i || col != cellDetails[row][col].parent_j) {
@@ -31,25 +30,23 @@ void tracePath(cell cellDetails[][COL], Pair dest) {
         int temp_row = cellDetails[row][col].parent_i, temp_col = cellDetails[row][col].parent_j;
         row = temp_row, col = temp_col;
     }
-    Path.push({row, col});
-    while (!Path.empty()) {
-        Pair p = Path.top(); Path.pop();
-        printf("-> (%d,%d) ", p.first, p.second);
-    }
+
+    return Path.top();
+
 }
-void aStarSearch(const std::vector<std::string> &map_sketch, Pair src, Pair dest) {
+std::pair<int, int> aStarSearch(const std::vector<std::string> &map_sketch, Pair src, Pair dest) {
 
     if (!isUnBlocked(map_sketch, src.first, src.second)) {
         printf("Source is blocked\n");
-        return;
+        return src;
     }
     if (!isUnBlocked(map_sketch, dest.first, dest.second)){
         printf("destination is blocked\n");
-        return;
+        return src;
     }
     if (isDestination(src.first, src.second, dest)) {
         printf("We are already at the destination\n");
-        return;
+        return src;
     }
 
     bool closedList[ROW][COL];
@@ -87,8 +84,8 @@ void aStarSearch(const std::vector<std::string> &map_sketch, Pair src, Pair dest
             if (isDestination(i - 1, j, dest)) {
                 cellDetails[i - 1][j].parent_i = i;
                 cellDetails[i - 1][j].parent_j = j;
-                tracePath(cellDetails, dest);
-                return;
+
+                return tracePath(cellDetails, dest);
             }
             else if (!closedList[i - 1][j]) {
                 gNew = cellDetails[i][j].g + 1.0;
@@ -109,8 +106,7 @@ void aStarSearch(const std::vector<std::string> &map_sketch, Pair src, Pair dest
             if (isDestination(i + 1, j, dest)) {
                 cellDetails[i + 1][j].parent_i = i;
                 cellDetails[i + 1][j].parent_j = j;
-                tracePath(cellDetails, dest);
-                return;
+                return tracePath(cellDetails, dest);
             }
             else if (!closedList[i + 1][j]) {
                 gNew = cellDetails[i][j].g + 1.0;
@@ -131,8 +127,7 @@ void aStarSearch(const std::vector<std::string> &map_sketch, Pair src, Pair dest
             if (isDestination(i, j - 1, dest)) {
                 cellDetails[i][j - 1].parent_i = i;
                 cellDetails[i][j - 1].parent_j = j;
-                tracePath(cellDetails, dest);
-                return;
+                return tracePath(cellDetails, dest);;
             }
             else if (!closedList[i][j - 1]) {
                 gNew = cellDetails[i][j].g + 1.0;
@@ -153,8 +148,7 @@ void aStarSearch(const std::vector<std::string> &map_sketch, Pair src, Pair dest
             if (isDestination(i, j + 1, dest)) {
                 cellDetails[i][j + 1].parent_i = i;
                 cellDetails[i][j + 1].parent_j = j;
-                tracePath(cellDetails, dest);
-                return;
+                return tracePath(cellDetails, dest);;
             }
             else if (!closedList[i][j + 1]) {
                 gNew = cellDetails[i][j].g + 1.0;
@@ -172,14 +166,74 @@ void aStarSearch(const std::vector<std::string> &map_sketch, Pair src, Pair dest
         }
     }
     printf("Failed to find the Destination Cell\n");
-    return;
+    return src;
 }
 void Ghosts::handleMovement(const std::vector<std::string> &map_sketch,sf::Vector2f relPos) {
-    sf::Vector2f Pos,relPos2;
-    Pos=this->GetPosition();
-    relPos2.x=static_cast<int>(Pos.x/rect.getSize().x)-8;
-    relPos2.y=static_cast<int>(Pos.y/rect.getSize().x);
+    remaining = rect.getSize().x;
+    sf::Vector2f Pos, relPos2;
+    Pos = this->GetPosition();
+    relPos2.x = static_cast<int>(Pos.x / rect.getSize().x) - 8;
+    relPos2.y = static_cast<int>(Pos.y / rect.getSize().x);
     Pair src = std::make_pair(relPos2.y, relPos2.x);
-    Pair dest = std::make_pair(relPos.y, relPos.x);
-    aStarSearch(map_sketch, src, dest);
+    Pair dest, p;
+    if (this->scared) {
+        switch (this->id % 4) {
+            case 0:
+                dest = std::make_pair(relPos.y, relPos.x);
+                break;
+            case 1:
+                dest = std::make_pair(relPos.y, relPos.x);
+                break;
+            case 2:
+                dest = std::make_pair(relPos.y, relPos.x);
+                break;
+            default:
+                dest = std::make_pair(relPos.y, relPos.x);
+                break;
+        }
+    } else {
+        switch (this->id % 4) {
+            case 0:
+                dest = std::make_pair(relPos.y, relPos.x);
+                break;
+            case 1:
+                dest = std::make_pair(relPos.y, relPos.x);
+                break;
+            case 2:
+                dest = std::make_pair(relPos.y, relPos.x);
+                break;
+            default:
+                dest = std::make_pair(relPos.y, relPos.x);
+                break;
+        }
+    }
+    p = aStarSearch(map_sketch, src, dest);
+
+    if (src.second < p.second) {
+        currentDirection = RIGHT;
+    } else if (src.second > p.second) {
+        currentDirection = LEFT;
+    } else if (src.first < p.first) {
+        currentDirection = DOWN;
+    } else if (src.first > p.first) {
+        currentDirection = UP;
+    } else {
+        currentDirection = previousDirection;
+    }
+    const auto next = relPos2 + directions[currentDirection];
+    if (canMove(next, map_sketch)) {
+        if (currentDirection == previousDirection || previousDirection == NONE) {
+            currentDirection = NONE;
+            remaining = 0;
+            previousDirection = NONE;
+        } else
+            currentDirection=NONE;
+            //currentDirection = previousDirection;
+    }
+    //std::cout << src.second << " " << src.first << " " << p.second <<" "<<p.first<<"\n";
+    //std::cout<<"Aceasta este pozitia fantomei: "<<relPos2.x<<" "<<relPos2.y<<"\n";
 }
+
+//void Ghosts::setScared(bool Scared){
+//    this->scared=Scared;
+//}

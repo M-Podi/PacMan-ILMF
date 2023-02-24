@@ -6,7 +6,6 @@
 
 
 void Pacman::handleMovement(const std::vector<std::string> &map_sketch,sf::Vector2f relPos) {
-
     if (currentDirection != NONE) return;
     remaining = rect.getSize().x;
 

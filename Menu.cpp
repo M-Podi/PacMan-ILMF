@@ -1,12 +1,9 @@
-//
-// Created by Matei on 11/26/2022.
-//
 
 #include "Menu.h"
 Menu::Menu(){
-//        if(window.getSize().y>window.getSize().x){
-//            throw ResolutionUnsupported("Your current screen resolution is not supported");
-//        }
+        if(window.getSize().y>window.getSize().x){
+            throw ResolutionUnsupported("Your current screen resolution is not supported");
+        }
     window.setVerticalSyncEnabled(true);
     animatedBackground.setSize(sf::Vector2f(static_cast<float>(window.getSize().x),static_cast<float>(window.getSize().y)));
     animatedBackground.setPosition(0,0);
@@ -112,7 +109,7 @@ void Menu::update(){
                         entities.back()->setPosition(map.getPac_pos());
                         GhostPos=map.getGhost_pos();
                         for(int i=0;i<static_cast<int>(GhostPos.size());i++){
-                            entities.push_back(std::make_shared<Ghosts>(window.getSize().y/map_sketch.size(),window.getSize().y/map_sketch.size(),colors[i]));
+                            entities.push_back(std::make_shared<Ghosts>(window.getSize().y/map_sketch.size(),window.getSize().y/map_sketch.size(),colors[i],i));
                             entities.back()->setPosition(GhostPos[i]);
                         }
                         normalPoints=static_cast<int>(map.getPoints().size());
@@ -180,24 +177,33 @@ void Menu::update(){
             default:
                 break;
         }
-
     }
-
     animation1.Update(0,deltaTime);
     animatedBackground.setTextureRect(animation1.getuvRect());
     Scor=(normalPoints-map.getPoints().size())*10+(PowerPoints-map.getPowerup().size())*30;
     score.setText(std::to_string(Scor));
     if(scenario==displaying::GAME){
-        sf::Vector2f Pos1,relPos1,Pos2,relPos2;
-
+        sf::Vector2f Pos1,Pos2,relPos1,relPos2;
         for(const auto&entity:entities){
+            bool scared=false;
             if(std::dynamic_pointer_cast<Pacman>(entity)) {
                 Pos1 = entity->GetPosition();
-                relPos1.x=static_cast<int>(((Pos1.x)/(window.getSize().y/map_sketch.size())))-8;
+                if(((Pos1.x)/(window.getSize().y/map_sketch.size()))-8<1)
+                    relPos1.x=2;
+                else
+                    relPos1.x=static_cast<int>(((Pos1.x)/(window.getSize().y/map_sketch.size())))-8;
                 relPos1.y=static_cast<int>(Pos1.y/(window.getSize().y/map_sketch.size()));
+                scared=map.update(Pos1);
             }
+            else{
+                //entity->setScared(scared);
+            }
+            Pos2=entity->GetPosition();
+
+            relPos2.x=static_cast<int>(((Pos2.x)/(window.getSize().y/map_sketch.size())))-8;
+            relPos2.y=static_cast<int>(Pos2.y/(window.getSize().y/map_sketch.size()));
             entity->handleMovement(map_sketch,relPos1);
-            entity->move(map.getPoints(),map.getPowerup(),map_sketch,window.getSize().x);
+            entity->move(map_sketch,window.getSize().x);
             entity->update2(deltaTime);
         }
 

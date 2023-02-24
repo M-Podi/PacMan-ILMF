@@ -7,7 +7,7 @@ Entity::Entity(float x, float y,sf::Texture &texture,int frames) {
     animation2.Innit(&texture,sf::Vector2u(frames,1),0.1f);
     rect.setSize(sf::Vector2f(x, y));
     rect.setTexture(&texture);
-    rect.setOrigin(rect.getGlobalBounds().getSize()/2.f);
+    rect.setOrigin(rect.getLocalBounds().width / 2,rect.getLocalBounds().height/2);
 }
 sf::Vector2f Entity::GetPosition() {
     return rect.getPosition();
@@ -27,17 +27,8 @@ void Entity::update2(float deltaTime){
     animation2.Update(0,deltaTime);
     this->rect.setTextureRect(animation2.getuvRect());
 }
-void Entity::move(std::vector<sf::CircleShape>& point,std::vector<sf::CircleShape>& powerup,const std::vector<std::string> &map_sketch,int screenSize) {
-    for (int i = 0; i < static_cast<int>(point.size()); i++) {
-        if(point[i].getGlobalBounds().contains(rect.getPosition())) {
-            point.erase(point.begin() + i);
-        }
-    }
-    for (int i = 0; i < static_cast<int>(powerup.size()); i++) {
-        if(powerup[i].getGlobalBounds().contains(rect.getPosition())) {
-            powerup.erase(powerup.begin() + i);
-        }
-    }
+
+void Entity::move(const std::vector<std::string> &map_sketch,int screenSize) {
 
     if (currentDirection == NONE)
     {
@@ -54,7 +45,7 @@ void Entity::move(std::vector<sf::CircleShape>& point,std::vector<sf::CircleShap
     }
     rect.setPosition(coords);
     int sidebar = (screenSize - rect.getSize().x * map_sketch.size()) / 2;
-    if(rect.getPosition().x<sidebar)
+    if(rect.getPosition().x+1<sidebar)
         rect.setPosition(rect.getPosition()+sf::Vector2f(map_sketch.size()*rect.getSize().x,0));
     else if(rect.getPosition().x>sidebar+map_sketch.size()*rect.getSize().x)
         rect.setPosition(rect.getPosition()-sf::Vector2f(map_sketch.size()*rect.getSize().x,0));
