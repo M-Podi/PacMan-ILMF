@@ -6,8 +6,10 @@ Entity::Entity(float x, float y,sf::Texture &texture,int frames) {
     rect.setRotation(0.f);
     animation2.Innit(&texture,sf::Vector2u(frames,1),0.1f);
     rect.setSize(sf::Vector2f(x, y));
-    rect.setTexture(&texture);
-    rect.setOrigin(rect.getLocalBounds().width / 2,rect.getLocalBounds().height/2);
+    rect.setOrigin(rect.getLocalBounds().width/2,rect.getLocalBounds().height/2);
+    rect.setFillColor(sf::Color::Yellow);
+    //rect.setTexture(&texture);
+
 }
 sf::Vector2f Entity::GetPosition() {
     return rect.getPosition();

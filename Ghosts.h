@@ -18,7 +18,7 @@ private:
 public:
     Ghosts()=default;
     Ghosts(float x, float y,sf::Texture &color,int id):Entity(x,y,color,2),id(id){};
-    void handleMovement(const std::vector<std::string> &map_sketch,sf::Vector2f relPos) override;
+    void handleMovement(const std::vector<std::string> &map_sketch,sf::Vector2f destPos) override;
     Entity* clone() const override { return new Ghosts(*this); }
     //void setScared(bool scared) override;
     int getTimer()const;

@@ -45,6 +45,12 @@ public:
                         powerup.back().setPosition(sidebar + i * Size.x + Size.x / 2 - Size.x / 4,
                                                    j * Size.y + Size.y / 2 - Size.x / 4);
                         break;
+                    case '+':
+                        point.emplace_back(sf::CircleShape());
+                        point.back().setRadius(Size.x / 8);
+                        point.back().setPosition(sidebar + i * Size.x + Size.x / 2 - Size.x / 8,
+                                                 j * Size.y + Size.y / 2 - Size.x / 8);
+                        break;
                     case 'P':
                         Pac_pos = sf::Vector2f(sidebar + i * Size.x, j * Size.y);
                         break;
@@ -100,6 +106,5 @@ public:
             window.draw(o);
         window.draw(gate);
     }
-
 };
 #endif //OOP_MAP_H

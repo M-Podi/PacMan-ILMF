@@ -1,9 +1,9 @@
 
 #include "Menu.h"
 Menu::Menu(){
-        if(window.getSize().y>window.getSize().x){
-            throw ResolutionUnsupported("Your current screen resolution is not supported");
-        }
+    if(window.getSize().y>window.getSize().x){
+        throw ResolutionUnsupported("Your current screen resolution is not supported");
+    }
     window.setVerticalSyncEnabled(true);
     animatedBackground.setSize(sf::Vector2f(static_cast<float>(window.getSize().x),static_cast<float>(window.getSize().y)));
     animatedBackground.setPosition(0,0);
@@ -106,11 +106,12 @@ void Menu::update(){
                         map.Innit(static_cast<int>(map_sketch.size()),static_cast<int>(window.getSize().y),static_cast<int>(window.getSize().x),map_sketch);
                         Sidebar = window.getSize().x-(window.getSize().y)/2;
                         entities.push_back(std::make_shared<Pacman>(window.getSize().y/map_sketch.size(),window.getSize().y/map_sketch.size()));
-                        entities.back()->setPosition(map.getPac_pos());
+
                         GhostPos=map.getGhost_pos();
+                        entities.back()->setPosition(GhostPos[1]);
                         for(int i=0;i<static_cast<int>(GhostPos.size());i++){
                             entities.push_back(std::make_shared<Ghosts>(window.getSize().y/map_sketch.size(),window.getSize().y/map_sketch.size(),colors[i],i));
-                            entities.back()->setPosition(GhostPos[i]);
+                            entities.back()->setPosition(map.getPac_pos());
                         }
                         normalPoints=static_cast<int>(map.getPoints().size());
                         PowerPoints=static_cast<int>(map.getPowerup().size());
@@ -146,7 +147,7 @@ void Menu::update(){
                         soundL.resize(2);
                     }
                     soundlevel.setPosition(static_cast<float>(window.getSize().x) / 200 * 97,
-                                                        static_cast<float>(window.getSize().y) / 20 * 9);
+                                           static_cast<float>(window.getSize().y) / 20 * 9);
                     soundlevel.setText(soundL);
                 }
                 if (VolumeUp.isMouseOver(window) && scenario == displaying::SETTINGS) {
@@ -159,7 +160,7 @@ void Menu::update(){
                     soundL.resize(2);
                     if (100 - music.getVolume() < 5) {
                         soundlevel.setPosition(static_cast<float>(window.getSize().x) / 100 * 48,
-                                                            static_cast<float>(window.getSize().y) / 20 * 9);
+                                               static_cast<float>(window.getSize().y) / 20 * 9);
                         soundL = "100";
                     }
                     soundlevel.setText(soundL);
@@ -183,26 +184,18 @@ void Menu::update(){
     Scor=(normalPoints-map.getPoints().size())*10+(PowerPoints-map.getPowerup().size())*30;
     score.setText(std::to_string(Scor));
     if(scenario==displaying::GAME){
+
         sf::Vector2f Pos1,Pos2,relPos1,relPos2;
         for(const auto&entity:entities){
             bool scared=false;
             if(std::dynamic_pointer_cast<Pacman>(entity)) {
                 Pos1 = entity->GetPosition();
-                if(((Pos1.x)/(window.getSize().y/map_sketch.size()))-8<1)
-                    relPos1.x=2;
-                else
-                    relPos1.x=static_cast<int>(((Pos1.x)/(window.getSize().y/map_sketch.size())))-8;
-                relPos1.y=static_cast<int>(Pos1.y/(window.getSize().y/map_sketch.size()));
+
                 scared=map.update(Pos1);
             }
             else{
-                //entity->setScared(scared);
             }
-            Pos2=entity->GetPosition();
-
-            relPos2.x=static_cast<int>(((Pos2.x)/(window.getSize().y/map_sketch.size())))-8;
-            relPos2.y=static_cast<int>(Pos2.y/(window.getSize().y/map_sketch.size()));
-            entity->handleMovement(map_sketch,relPos1);
+            entity->handleMovement(map_sketch,Pos1);
             entity->move(map_sketch,window.getSize().x);
             entity->update2(deltaTime);
         }

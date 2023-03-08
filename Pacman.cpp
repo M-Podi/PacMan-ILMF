@@ -5,7 +5,13 @@
 #include "Pacman.h"
 
 
-void Pacman::handleMovement(const std::vector<std::string> &map_sketch,sf::Vector2f relPos) {
+void Pacman::handleMovement(const std::vector<std::string> &map_sketch,sf::Vector2f Pos1) {
+    sf::Vector2f relPos;
+    if(((Pos1.x)/rect.getSize().x)-8<1)
+        relPos.x=2;
+    else
+        relPos.x=static_cast<int>((Pos1.x)/rect.getSize().x)-8;
+    relPos.y=static_cast<int>(Pos1.y/rect.getSize().x);
     if (currentDirection != NONE) return;
     remaining = rect.getSize().x;
 
